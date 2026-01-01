@@ -1,9 +1,15 @@
-name: deerhide_container_example
+name: python-github-runner
 tags: 
   - latest
-registry: ghcr.io/deerhide/template_container_image
+registry: ghcr.io/deerhide/python-github-runner
 build:
   format: oci
   args:
     - APP_UID=1000
     - UBUNTU_VERSION=24.04
+  labels:
+    - org.opencontainers.image.source=https://github.com/deerhide/python-github-runner
+    - org.opencontainers.image.description="Python GitHub Runner"
+    - org.opencontainers.image.licenses="MIT"
+    - org.opencontainers.image.authors="Deerhide"
+    - org.opencontainers.image.vendor="Deerhide"
