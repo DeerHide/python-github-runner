@@ -1,0 +1,12 @@
+.git
+.github
+build
+.env
+*.md
+LICENSE
+.dive-ci
+.hadolint.yaml
+.releaserc.yaml
+.commitlintrc.yaml
+.containerignore
+scripts/

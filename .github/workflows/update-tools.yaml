@@ -29,18 +29,30 @@ jobs:
           ARGO_LATEST=$(get_latest_version "argoproj/argo-workflows")
           KARGO_LATEST=$(get_latest_version "akuity/kargo")
           PACK_LATEST=$(get_latest_version "buildpacks/pack")
+          DIVE_LATEST=$(get_latest_version "wagoodman/dive")
+          HADOLINT_LATEST=$(get_latest_version "hadolint/hadolint")
+          YQ_LATEST=$(get_latest_version "mikefarah/yq")
 
           echo "argo=${ARGO_LATEST}" >> "$GITHUB_OUTPUT"
           echo "kargo=${KARGO_LATEST}" >> "$GITHUB_OUTPUT"
           echo "pack=${PACK_LATEST}" >> "$GITHUB_OUTPUT"
+          echo "dive=${DIVE_LATEST}" >> "$GITHUB_OUTPUT"
+          echo "hadolint=${HADOLINT_LATEST}" >> "$GITHUB_OUTPUT"
+          echo "yq=${YQ_LATEST}" >> "$GITHUB_OUTPUT"
 
           ARGO_CURRENT=$(grep -oP 'ARGO_VERSION=\K[0-9.]+' Containerfile)
           KARGO_CURRENT=$(grep -oP 'KARGO_VERSION=\K[0-9.]+' Containerfile)
           PACK_CURRENT=$(grep -oP 'PACK_VERSION=\K[0-9.]+' Containerfile)
+          DIVE_CURRENT=$(grep -oP 'DIVE_VERSION=\K[0-9.]+' Containerfile)
+          HADOLINT_CURRENT=$(grep -oP 'HADOLINT_VERSION=\K[0-9.]+' Containerfile)
+          YQ_CURRENT=$(grep -oP 'YQ_VERSION=\K[0-9.]+' Containerfile)
 
           echo "argo_current=${ARGO_CURRENT}" >> "$GITHUB_OUTPUT"
           echo "kargo_current=${KARGO_CURRENT}" >> "$GITHUB_OUTPUT"
           echo "pack_current=${PACK_CURRENT}" >> "$GITHUB_OUTPUT"
+          echo "dive_current=${DIVE_CURRENT}" >> "$GITHUB_OUTPUT"
+          echo "hadolint_current=${HADOLINT_CURRENT}" >> "$GITHUB_OUTPUT"
+          echo "yq_current=${YQ_CURRENT}" >> "$GITHUB_OUTPUT"
 
           UPDATES=""
           if [ "${ARGO_CURRENT}" != "${ARGO_LATEST}" ]; then
@@ -51,6 +63,15 @@ jobs:
           fi
           if [ "${PACK_CURRENT}" != "${PACK_LATEST}" ]; then
             UPDATES="${UPDATES}- pack (Buildpacks): ${PACK_CURRENT} -> ${PACK_LATEST}\n"
+          fi
+          if [ "${DIVE_CURRENT}" != "${DIVE_LATEST}" ]; then
+            UPDATES="${UPDATES}- dive: ${DIVE_CURRENT} -> ${DIVE_LATEST}\n"
+          fi
+          if [ "${HADOLINT_CURRENT}" != "${HADOLINT_LATEST}" ]; then
+            UPDATES="${UPDATES}- hadolint: ${HADOLINT_CURRENT} -> ${HADOLINT_LATEST}\n"
+          fi
+          if [ "${YQ_CURRENT}" != "${YQ_LATEST}" ]; then
+            UPDATES="${UPDATES}- yq: ${YQ_CURRENT} -> ${YQ_LATEST}\n"
           fi
 
           if [ -z "${UPDATES}" ]; then
@@ -73,19 +94,29 @@ jobs:
           ARGO_LATEST: ${{ steps.versions.outputs.argo }}
           KARGO_LATEST: ${{ steps.versions.outputs.kargo }}
           PACK_LATEST: ${{ steps.versions.outputs.pack }}
+          DIVE_LATEST: ${{ steps.versions.outputs.dive }}
+          HADOLINT_LATEST: ${{ steps.versions.outputs.hadolint }}
+          YQ_LATEST: ${{ steps.versions.outputs.yq }}
           ARGO_CURRENT: ${{ steps.versions.outputs.argo_current }}
           KARGO_CURRENT: ${{ steps.versions.outputs.kargo_current }}
           PACK_CURRENT: ${{ steps.versions.outputs.pack_current }}
+          DIVE_CURRENT: ${{ steps.versions.outputs.dive_current }}
+          HADOLINT_CURRENT: ${{ steps.versions.outputs.hadolint_current }}
+          YQ_CURRENT: ${{ steps.versions.outputs.yq_current }}
         run: |
-          if [ "${ARGO_CURRENT}" != "${ARGO_LATEST}" ]; then
-            sed -i "s/ARGO_VERSION=${ARGO_CURRENT}/ARGO_VERSION=${ARGO_LATEST}/g" Containerfile manifest.yaml
-          fi
-          if [ "${KARGO_CURRENT}" != "${KARGO_LATEST}" ]; then
-            sed -i "s/KARGO_VERSION=${KARGO_CURRENT}/KARGO_VERSION=${KARGO_LATEST}/g" Containerfile manifest.yaml
-          fi
-          if [ "${PACK_CURRENT}" != "${PACK_LATEST}" ]; then
-            sed -i "s/PACK_VERSION=${PACK_CURRENT}/PACK_VERSION=${PACK_LATEST}/g" Containerfile manifest.yaml
-          fi
+          update_version() {
+            local name="$1" current="$2" latest="$3"
+            if [ "${current}" != "${latest}" ]; then
+              sed -i "s/${name}=${current}/${name}=${latest}/g" Containerfile manifest.yaml
+            fi
+          }
+
+          update_version "ARGO_VERSION" "${ARGO_CURRENT}" "${ARGO_LATEST}"
+          update_version "KARGO_VERSION" "${KARGO_CURRENT}" "${KARGO_LATEST}"
+          update_version "PACK_VERSION" "${PACK_CURRENT}" "${PACK_LATEST}"
+          update_version "DIVE_VERSION" "${DIVE_CURRENT}" "${DIVE_LATEST}"
+          update_version "HADOLINT_VERSION" "${HADOLINT_CURRENT}" "${HADOLINT_LATEST}"
+          update_version "YQ_VERSION" "${YQ_CURRENT}" "${YQ_LATEST}"
 
       - name: Create pull request
         if: steps.versions.outputs.has_updates == 'true'

@@ -32,6 +32,51 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install buildah
+# hadolint ignore=DL3008
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y buildah \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configure buildah storage for container/rootless usage
+RUN mkdir -p /etc/containers \
+    && printf '[storage]\ndriver = "vfs"\n' > /etc/containers/storage.conf
+
+# Install trivy (vulnerability scanner)
+# hadolint ignore=DL3008,DL4006
+RUN curl -fsSL https://aquasecurity.github.io/trivy-repo/deb/public.key \
+      | gpg --dearmor -o /usr/share/keyrings/trivy.gpg \
+    && echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" \
+      | tee /etc/apt/sources.list.d/trivy.list \
+    && apt-get update \
+    && apt-get install --no-install-recommends -y trivy \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install dive (container filesystem analysis)
+ARG DIVE_VERSION=0.12.0
+# hadolint ignore=DL3008
+RUN curl -sSL -o /tmp/dive.deb \
+      "https://github.com/wagoodman/dive/releases/download/v${DIVE_VERSION}/dive_${DIVE_VERSION}_linux_amd64.deb" \
+    && apt-get update \
+    && apt-get install --no-install-recommends -y /tmp/dive.deb \
+    && rm /tmp/dive.deb \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install hadolint (Dockerfile/Containerfile linter)
+ARG HADOLINT_VERSION=2.12.0
+RUN curl -sSL -o /usr/local/bin/hadolint \
+      "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-x86_64" \
+    && chmod +x /usr/local/bin/hadolint
+
+# Install yq (YAML processor)
+ARG YQ_VERSION=4.45.4
+RUN curl -sSL -o /usr/local/bin/yq \
+      "https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_amd64" \
+    && chmod +x /usr/local/bin/yq
+
 # Install Argo Workflows CLI
 ARG ARGO_VERSION=3.6.4
 RUN curl -sSL -o /tmp/argo-linux-amd64.gz \
@@ -85,6 +130,3 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Add Poetry and UV to PATH
 RUN echo "export PATH=\"${APP_HOME}/.local/bin:\$PATH\"" >> ~/.bashrc
-
-# Placeholder command to keep the container running
-# CMD ["/bin/bash", "-c", "while true; do sleep 1; done"]
