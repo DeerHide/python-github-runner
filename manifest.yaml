@@ -7,7 +7,7 @@ build:
   args:
     - RUNNER_VERSION=latest
     - ARGO_VERSION=3.6.4
-    - PACKER_VERSION=1.11.2
+    - KARGO_VERSION=1.9.2
     - PACK_VERSION=0.36.4
   labels:
     - org.opencontainers.image.source=https://github.com/deerhide/python-github-runner

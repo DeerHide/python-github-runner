@@ -40,17 +40,11 @@ RUN curl -sSL -o /tmp/argo-linux-amd64.gz \
     && mv /tmp/argo-linux-amd64 /usr/local/bin/argo \
     && chmod +x /usr/local/bin/argo
 
-# Install HashiCorp Packer
-ARG PACKER_VERSION=1.11.2
-# hadolint ignore=DL3008
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y unzip \
-    && curl -sSL -o /tmp/packer.zip \
-      "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip" \
-    && unzip /tmp/packer.zip -d /usr/local/bin/ \
-    && rm /tmp/packer.zip \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Install Kargo CLI
+ARG KARGO_VERSION=1.9.2
+RUN curl -sSL -o /usr/local/bin/kargo \
+      "https://github.com/akuity/kargo/releases/download/v${KARGO_VERSION}/kargo-linux-amd64" \
+    && chmod +x /usr/local/bin/kargo
 
 # Install pack (Cloud Native Buildpacks CLI)
 ARG PACK_VERSION=0.36.4
