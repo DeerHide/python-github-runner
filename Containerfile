@@ -1,20 +1,10 @@
-ARG UBUNTU_VERSION=24.04
+ARG RUNNER_VERSION=latest
 
-FROM docker.io/library/ubuntu:$UBUNTU_VERSION as base
+FROM ghcr.io/actions/runner:${RUNNER_VERSION} as base
 
-ARG APP_UID=1000
-ARG APP_HOME=/home/appuser
+ARG APP_HOME=/home/runner
 
-# Setup the non-root user
-RUN userdel --remove ubuntu \
-    && useradd \
-      --no-log-init \
-      --uid $APP_UID \
-      --home-dir ${APP_HOME} \
-      --create-home \
-      --user-group \
-      appuser && \
-    chown -R appuser:appuser ${APP_HOME}
+USER root
 
 # Update and upgrade the system
 RUN apt-get update \
@@ -35,6 +25,40 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install skopeo
+# hadolint ignore=DL3008
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y skopeo \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Argo Workflows CLI
+ARG ARGO_VERSION=3.6.4
+RUN curl -sSL -o /tmp/argo-linux-amd64.gz \
+      "https://github.com/argoproj/argo-workflows/releases/download/v${ARGO_VERSION}/argo-linux-amd64.gz" \
+    && gunzip /tmp/argo-linux-amd64.gz \
+    && mv /tmp/argo-linux-amd64 /usr/local/bin/argo \
+    && chmod +x /usr/local/bin/argo
+
+# Install HashiCorp Packer
+ARG PACKER_VERSION=1.11.2
+# hadolint ignore=DL3008
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y unzip \
+    && curl -sSL -o /tmp/packer.zip \
+      "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip" \
+    && unzip /tmp/packer.zip -d /usr/local/bin/ \
+    && rm /tmp/packer.zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install pack (Cloud Native Buildpacks CLI)
+ARG PACK_VERSION=0.36.4
+RUN curl -sSL -o /tmp/pack.tgz \
+      "https://github.com/buildpacks/pack/releases/download/v${PACK_VERSION}/pack-v${PACK_VERSION}-linux.tgz" \
+    && tar -xzf /tmp/pack.tgz -C /usr/local/bin/ \
+    && rm /tmp/pack.tgz
+
 # Install Poetry latest version and add it to PATH
 # hadolint ignore=DL4006
 RUN curl -sSL https://install.python-poetry.org | python3 -
@@ -54,7 +78,7 @@ LABEL org.opencontainers.image.licenses="MIT"
 LABEL org.opencontainers.image.authors="Deerhide"
 LABEL org.opencontainers.image.vendor="Deerhide"
 
-USER ${APP_UID}
+USER runner
 WORKDIR ${APP_HOME}
 
 # Install Poetry latest version and add it to PATH
