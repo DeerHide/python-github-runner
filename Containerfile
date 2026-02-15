@@ -98,6 +98,10 @@ RUN curl -sSL -o /tmp/pack.tgz \
     && tar -xzf /tmp/pack.tgz -C /usr/local/bin/ \
     && rm /tmp/pack.tgz
 
+# Install pre-commit
+# hadolint ignore=DL3013
+RUN pip install --no-cache-dir pre-commit
+
 # Install Poetry latest version and add it to PATH
 # hadolint ignore=DL4006
 RUN curl -sSL https://install.python-poetry.org | python3 -

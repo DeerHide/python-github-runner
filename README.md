@@ -36,6 +36,7 @@ These tools allow the image to run its own build pipeline as a self-hosted runne
 | [trivy](https://github.com/aquasecurity/trivy) | Vulnerability scanner |
 | [hadolint](https://github.com/hadolint/hadolint) | Dockerfile/Containerfile linter |
 | [yq](https://github.com/mikefarah/yq) | YAML processor |
+| [pre-commit](https://pre-commit.com/) | Git hooks framework |
 
 ## CI/CD
 
@@ -127,9 +128,37 @@ Run the full build pipeline (lint, build, scan, push):
 ./scripts/builder.sh
 ```
 
+### Pre-commit hooks
+
+Install the git hooks locally:
+
+```bash
+pre-commit install --hook-type pre-commit --hook-type commit-msg
+```
+
+Hooks run automatically on every commit:
+
+| Hook | Stage | Description |
+|------|-------|-------------|
+| trailing-whitespace | pre-commit | Remove trailing whitespace |
+| end-of-file-fixer | pre-commit | Ensure files end with a newline |
+| check-yaml | pre-commit | Validate YAML syntax |
+| check-added-large-files | pre-commit | Prevent large files from being committed |
+| check-merge-conflict | pre-commit | Detect merge conflict markers |
+| detect-private-key | pre-commit | Prevent private keys from being committed |
+| hadolint | pre-commit | Lint Containerfile |
+| shellcheck | pre-commit | Lint shell scripts |
+| commitlint | commit-msg | Validate conventional commit messages |
+
+Run all hooks manually against all files:
+
+```bash
+pre-commit run --all-files
+```
+
 ### Contributing
 
-This project uses [Conventional Commits](https://www.conventionalcommits.org/). Commit messages are validated by commitlint on pull requests.
+This project uses [Conventional Commits](https://www.conventionalcommits.org/). Commit messages are validated by commitlint on pull requests and locally via pre-commit hooks.
 
 ```bash
 # Good
@@ -151,6 +180,7 @@ git commit -m "WIP"
 ├── .releaserc.yaml                      # Semantic release configuration
 ├── .hadolint.yaml                       # Hadolint configuration
 ├── .commitlintrc.yaml                   # Commitlint configuration
+├── .pre-commit-config.yaml              # Pre-commit hooks configuration
 ├── .containerignore                     # Build context exclusions
 ├── .dive-ci                             # Dive efficiency thresholds
 ├── .github/

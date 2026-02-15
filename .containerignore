@@ -9,4 +9,5 @@ LICENSE
 .releaserc.yaml
 .commitlintrc.yaml
 .containerignore
+.pre-commit-config.yaml
 scripts/
