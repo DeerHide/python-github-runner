@@ -6,7 +6,7 @@ ARG APP_HOME=/home/runner
 
 USER root
 
-# System upgrade, Python 3.12/3.13/3.14 (deadsnakes), skopeo, buildah
+# System upgrade, Python 3.12/3.13 (deadsnakes), skopeo, buildah
 # hadolint ignore=DL3008
 RUN apt-get update \
     && apt-get upgrade -y \
@@ -14,7 +14,7 @@ RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive add-apt-repository -y ppa:deadsnakes/ppa \
     && apt-get update \
     && apt-get install --no-install-recommends -y \
-       python3.12 python3.13 python3.14 \
+       python3.12 python3.13 \
        skopeo buildah \
     && apt-get autoremove -y \
     && apt-get clean \
@@ -82,6 +82,9 @@ RUN curl -sSL -o /tmp/pack.tgz \
 # Install pre-commit
 # hadolint ignore=DL3013
 RUN pip install --no-cache-dir pre-commit
+
+# Base stage must not end as root (hadolint DL3002)
+USER runner
 
 FROM base as runtime
 

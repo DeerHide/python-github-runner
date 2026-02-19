@@ -12,7 +12,7 @@ Container image based on the [GitHub Actions Runner](https://github.com/actions/
 
 | Tool | Version |
 |------|---------|
-| Python | 3.12, 3.13, 3.14 (via deadsnakes PPA) |
+| Python | 3.12, 3.13 (via deadsnakes PPA) |
 | Poetry | latest |
 | UV | latest |
 
