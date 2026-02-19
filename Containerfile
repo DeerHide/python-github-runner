@@ -22,9 +22,12 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# deadsnakes PPA does not ship python3.x-pip; bootstrap pip via ensurepip
-RUN python3.12 -m ensurepip --upgrade \
-    && python3.13 -m ensurepip --upgrade
+# deadsnakes PPA does not ship python3.x-pip or ensurepip; bootstrap via get-pip.py
+# hadolint ignore=DL4006
+RUN curl -sSL https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py \
+    && python3.12 /tmp/get-pip.py --no-cache-dir \
+    && python3.13 /tmp/get-pip.py --no-cache-dir \
+    && rm /tmp/get-pip.py
 
 # Configure buildah storage for container/rootless usage
 RUN mkdir -p /etc/containers \
