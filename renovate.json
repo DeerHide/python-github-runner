@@ -1,0 +1,71 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update GitHub Actions Runner version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["RUNNER_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "actions/runner",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update Dive version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["DIVE_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "wagoodman/dive",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update Hadolint version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["HADOLINT_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "hadolint/hadolint",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update yq version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["YQ_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "mikefarah/yq",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update Argo Workflows CLI version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["ARGO_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "argoproj/argo-workflows",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update Kargo CLI version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["KARGO_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "akuity/kargo",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update pack (Buildpacks) CLI version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["PACK_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "buildpacks/pack",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    }
+  ]
+}

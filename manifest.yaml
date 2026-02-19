@@ -1,12 +1,17 @@
 name: python-github-runner
-tags: 
+tags:
   - latest
 registry: ghcr.io/deerhide/python-github-runner
 build:
   format: oci
   args:
-    - APP_UID=1000
-    - UBUNTU_VERSION=24.04
+    - RUNNER_VERSION=2.321.0
+    - ARGO_VERSION=3.6.4
+    - KARGO_VERSION=1.9.2
+    - PACK_VERSION=0.36.4
+    - DIVE_VERSION=0.12.0
+    - HADOLINT_VERSION=2.12.0
+    - YQ_VERSION=4.45.4
   labels:
     - org.opencontainers.image.source=https://github.com/deerhide/python-github-runner
     - org.opencontainers.image.description="Python GitHub Runner"

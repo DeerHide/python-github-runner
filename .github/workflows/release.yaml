@@ -1,0 +1,147 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  release:
+    name: Semantic release
+    runs-on: ubuntu-latest
+    outputs:
+      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
+      new_release_version: ${{ steps.semantic.outputs.new_release_version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: cycjimmy/semantic-release-action@v4
+        id: semantic
+        with:
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-and-push:
+    name: Build, scan & push
+    needs: release
+    if: needs.release.outputs.new_release_published == 'true'
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_VERSION: ${{ needs.release.outputs.new_release_version }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: ./scripts/install_tools.sh
+
+      - name: Read manifest
+        id: manifest
+        run: |
+          echo "image_name=$(yq e '.name' manifest.yaml)" >> "$GITHUB_OUTPUT"
+          echo "registry=$(yq e '.registry' manifest.yaml)" >> "$GITHUB_OUTPUT"
+          echo "format=$(yq e '.build.format' manifest.yaml)" >> "$GITHUB_OUTPUT"
+
+      - name: Validate Containerfile
+        run: |
+          docker pull -q ghcr.io/hadolint/hadolint:latest
+          docker run --rm -i -v "$(pwd)/.hadolint.yaml:/.hadolint.yaml:ro" hadolint/hadolint:latest hadolint --config /.hadolint.yaml - < Containerfile
+
+      - name: Build image
+        env:
+          IMAGE_NAME: ${{ steps.manifest.outputs.image_name }}
+          IMAGE_FORMAT: ${{ steps.manifest.outputs.format }}
+        run: |
+          # Build args from manifest
+          BUILD_ARGS=""
+          for arg in $(yq e '.build.args[]' manifest.yaml); do
+            BUILD_ARGS="${BUILD_ARGS} --build-arg ${arg}"
+          done
+
+          # Labels from manifest
+          LABELS=""
+          while IFS= read -r label; do
+            if [[ -n "${label}" ]]; then
+              label_key="${label%%=*}"
+              label_value="${label#*=}"
+              label_value="${label_value%\"}"
+              label_value="${label_value#\"}"
+              LABELS="${LABELS} --label ${label_key}=${label_value}"
+            fi
+          done < <(yq e '.build.labels[]' manifest.yaml)
+
+          # Add version label
+          LABELS="${LABELS} --label org.opencontainers.image.version=${IMAGE_VERSION}"
+
+          # shellcheck disable=SC2086
+          buildah build \
+            --squash \
+            --pull-always \
+            --format "${IMAGE_FORMAT}" \
+            ${BUILD_ARGS} \
+            ${LABELS} \
+            --tag "${IMAGE_NAME}:${IMAGE_VERSION}" \
+            .
+
+          # Save to OCI archive for scanning and pushing
+          mkdir -p build
+          buildah push "${IMAGE_NAME}:${IMAGE_VERSION}" "oci-archive:build/${IMAGE_NAME}.tar"
+
+          # Load into Docker daemon for dive scan
+          skopeo copy "oci-archive:build/${IMAGE_NAME}.tar" "docker-daemon:${IMAGE_NAME}:${IMAGE_VERSION}"
+
+      - name: Dive filesystem scan
+        env:
+          IMAGE_NAME: ${{ steps.manifest.outputs.image_name }}
+        run: dive --ci --source=docker "${IMAGE_NAME}:${IMAGE_VERSION}"
+
+      - name: Trivy vulnerability scan
+        env:
+          IMAGE_NAME: ${{ steps.manifest.outputs.image_name }}
+        run: |
+          trivy image \
+            --input "build/${IMAGE_NAME}.tar" \
+            --severity HIGH,CRITICAL \
+            --exit-code 1 \
+            "${IMAGE_NAME}:${IMAGE_VERSION}"
+
+      - name: Login to GHCR
+        env:
+          REGISTRY: ${{ steps.manifest.outputs.registry }}
+        run: skopeo login ghcr.io -u "${{ github.actor }}" -p "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Push to registry
+        env:
+          IMAGE_NAME: ${{ steps.manifest.outputs.image_name }}
+          REGISTRY: ${{ steps.manifest.outputs.registry }}
+        run: |
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${IMAGE_VERSION}"
+          if [ -z "${MAJOR}" ] || [ -z "${MINOR}" ] || [ -z "${PATCH}" ]; then
+            echo "Error: IMAGE_VERSION '${IMAGE_VERSION}' is not valid semver (expected MAJOR.MINOR.PATCH)"
+            exit 1
+          fi
+
+          # Push semantic version tag (1.2.3)
+          skopeo copy --all "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${IMAGE_VERSION}"
+
+          # Push major.minor tag (1.2)
+          skopeo copy --all "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${MAJOR}.${MINOR}"
+
+          # Push major tag (1)
+          skopeo copy --all "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${MAJOR}"
+
+          # Push latest tag
+          skopeo copy --all "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:latest"
+
+      - name: Verify pushed image
+        env:
+          REGISTRY: ${{ steps.manifest.outputs.registry }}
+        run: |
+          skopeo inspect "docker://${REGISTRY}:${IMAGE_VERSION}" --format '{{.Labels}}'
