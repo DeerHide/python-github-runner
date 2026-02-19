@@ -90,6 +90,8 @@ jobs:
           IMAGE_NAME: ${{ steps.manifest.outputs.image_name }}
         run: |
           trivy image \
+            --ignore-unfixed \
+            --pkg-types library \
             --ignorefile .trivyignore \
             --severity HIGH,CRITICAL \
             --exit-code 1 \

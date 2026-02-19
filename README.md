@@ -6,7 +6,7 @@ Container image based on the [GitHub Actions Runner](https://github.com/actions/
 
 ### Base image
 
-`ghcr.io/actions/actions-runner` (GitHub Actions Runner). Vulnerability scan results include components inherited from this base (Ubuntu, Node runner externals, .NET runner deps, containerd, docker-buildx). These cannot be fixed in this repo; we track them in [`.trivyignore`](.trivyignore) with expiration dates and rely on upstream runner image upgrades. Base image version is controlled by `RUNNER_VERSION` in [manifest.yaml](manifest.yaml) and is kept up to date by [Renovate](renovate.json). When upgrading the runner version, review Trivy output and remove or extend entries in `.trivyignore` as fixes become available.
+`ghcr.io/actions/actions-runner` (GitHub Actions Runner). Trivy is run with `--pkg-types library` and `--ignore-unfixed`, so OS packages from the base image (Ubuntu, containerd, docker-buildx, etc.) are not reported. Any remaining base-origin library findings can be listed in [`.trivyignore`](.trivyignore) with expiration dates. Base image version is controlled by `RUNNER_VERSION` in [manifest.yaml](manifest.yaml) and is kept up to date by [Renovate](renovate.json).
 
 ### Python
 
@@ -65,7 +65,7 @@ When a new version is determined, the release workflow:
 3. Validates the Containerfile with hadolint
 4. Builds the image with `buildah` (OCI format, squashed layers)
 5. Runs `dive` filesystem efficiency scan
-6. Runs `trivy` vulnerability scan (HIGH/CRITICAL)
+6. Runs `trivy` vulnerability scan (library packages only, HIGH/CRITICAL, unfixed ignored)
 7. Pushes to GHCR with semver tags: `1.2.3`, `1.2`, `1`, `latest`
 
 ### Image tags
@@ -201,7 +201,7 @@ git commit -m "WIP"
 
 ## Security
 
-This image is based on [actions/actions-runner](https://github.com/actions/runner). Trivy scans report vulnerabilities in the base image (OS packages, Node runner externals, .NET runner deps, containerd, docker-buildx) that cannot be patched in this repository. Known base-image findings are listed in [`.trivyignore`](.trivyignore) with expiration dates so they are re-evaluated when the base is upgraded. Keep `RUNNER_VERSION` in [manifest.yaml](manifest.yaml) up to date (Renovate opens PRs) and review or remove `.trivyignore` entries when upgrading.
+This image is based on [actions/actions-runner](https://github.com/actions/runner). Trivy is configured to scan only library packages and to ignore unfixed vulnerabilities, so base-image OS packages are not reported. Any remaining base-origin findings can be listed in [`.trivyignore`](.trivyignore) with expiration dates. Keep `RUNNER_VERSION` in [manifest.yaml](manifest.yaml) up to date (Renovate opens PRs) and review or remove `.trivyignore` entries when upgrading.
 
 ## License
 
