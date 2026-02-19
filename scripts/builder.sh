@@ -47,13 +47,13 @@ clean_build_dir(){
 hadolint_validate(){
     local hadolint_exec
     local hadolint_exit_code
-    log_info "Validating Dockerfile with hadolint"
+    log_info "Validating Containerfile with hadolint"
     ${CLI} pull -q ghcr.io/hadolint/hadolint:latest > /dev/null
     log_trace "$(${CLI} run --rm -i hadolint/hadolint:latest hadolint -v)"
 
     set +e
     hadolint_exec=$(
-        ${CLI} run --rm -i hadolint/hadolint:latest < Containerfile \
+        ${CLI} run --rm -i -v "$(pwd)/.hadolint.yaml:/.hadolint.yaml:ro" hadolint/hadolint:latest hadolint --config /.hadolint.yaml - < Containerfile \
             2>&1
     )
     hadolint_exit_code=$?
@@ -312,7 +312,7 @@ trivy_scan () {
 
 # Main
 clean_build_dir
-check_for_manifest # Check for manifest file existence\
+check_for_manifest # Check for manifest file existence
 IMAGE_NAME=$(retrieve_name_from_manifest) # Retrieve image name from manifest
 
 log_info "Starting build process"

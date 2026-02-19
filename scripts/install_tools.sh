@@ -27,7 +27,7 @@ sudo apt-get install trivy -y
 # Install buildah
 sudo apt-get install buildah -y
 
-# Install yq\
+# Install yq
 VERSION="v4.45.4"
 BINARY="yq_linux_amd64"
 wget https://github.com/mikefarah/yq/releases/download/${VERSION}/${BINARY}.tar.gz -O - |\
