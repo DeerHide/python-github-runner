@@ -14,7 +14,9 @@ RUN apt-get update \
     && DEBIAN_FRONTEND=noninteractive add-apt-repository -y ppa:deadsnakes/ppa \
     && apt-get update \
     && apt-get install --no-install-recommends -y \
-       python3.12 python3.13 \
+       build-essential \
+       python3.12 python3.12-dev python3.12-pip \
+       python3.13 python3.13-dev python3.13-pip \
        skopeo buildah \
     && apt-get autoremove -y \
     && apt-get clean \
@@ -81,7 +83,7 @@ RUN curl -sSL -o /tmp/pack.tgz \
 
 # Install pre-commit
 # hadolint ignore=DL3013
-RUN pip install --no-cache-dir pre-commit
+RUN pip3 install --no-cache-dir pre-commit
 
 # Base stage must not end as root (hadolint DL3002)
 USER runner
