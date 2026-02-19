@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/DeerHide/python-github-runner/compare/v1.0.2...v1.0.3) (2026-02-19)
+
+
+### Bug Fixes
+
+* **ci:** use oci-archive format for trivy scan and cache vulndb ([acd077c](https://github.com/DeerHide/python-github-runner/commit/acd077cc362338d1646f0a8f750d87f76933431e))
+
 ## [1.0.2](https://github.com/DeerHide/python-github-runner/compare/v1.0.1...v1.0.2) (2026-02-19)
 
 
