@@ -15,12 +15,16 @@ RUN apt-get update \
     && apt-get update \
     && apt-get install --no-install-recommends -y \
        build-essential \
-       python3.12 python3.12-dev python3.12-pip \
-       python3.13 python3.13-dev python3.13-pip \
+       python3.12 python3.12-dev \
+       python3.13 python3.13-dev \
        skopeo buildah \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+# deadsnakes PPA does not ship python3.x-pip; bootstrap pip via ensurepip
+RUN python3.12 -m ensurepip --upgrade \
+    && python3.13 -m ensurepip --upgrade
 
 # Configure buildah storage for container/rootless usage
 RUN mkdir -p /etc/containers \
