@@ -101,14 +101,22 @@ jobs:
           IMAGE_NAME: ${{ steps.manifest.outputs.image_name }}
         run: dive --ci --source=docker "${IMAGE_NAME}:${IMAGE_VERSION}"
 
+      - name: Cache Trivy vulnerability DB
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/trivy
+          key: trivy-db-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            trivy-db-${{ runner.os }}-
+
       - name: Trivy vulnerability scan
         env:
           IMAGE_NAME: ${{ steps.manifest.outputs.image_name }}
         run: |
           trivy image \
-            --input "build/${IMAGE_NAME}.tar" \
             --severity HIGH,CRITICAL \
-            --exit-code 1
+            --exit-code 1 \
+            "oci-archive:build/${IMAGE_NAME}.tar"
 
       - name: Login to GHCR
         env:
