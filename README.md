@@ -6,7 +6,7 @@ Container image based on the [GitHub Actions Runner](https://github.com/actions/
 
 ### Base image
 
-`ghcr.io/actions/runner` (GitHub Actions Runner)
+`ghcr.io/actions/actions-runner` (GitHub Actions Runner)
 
 ### Python
 

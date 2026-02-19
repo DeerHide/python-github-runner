@@ -1,6 +1,6 @@
 ARG RUNNER_VERSION=2.321.0
 
-FROM ghcr.io/actions/runner:${RUNNER_VERSION} as base
+FROM ghcr.io/actions/actions-runner:${RUNNER_VERSION} AS base
 
 ARG APP_HOME=/home/runner
 
@@ -86,7 +86,7 @@ RUN pip install --no-cache-dir pre-commit
 # Base stage must not end as root (hadolint DL3002)
 USER runner
 
-FROM base as runtime
+FROM base AS runtime
 
 LABEL org.opencontainers.image.source=https://github.com/deerhide/python-github-runner
 LABEL org.opencontainers.image.description="Python GitHub Runner"
