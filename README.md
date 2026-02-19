@@ -44,13 +44,13 @@ These tools allow the image to run its own build pipeline as a self-hosted runne
 
 | Workflow | Trigger | Description |
 |----------|---------|-------------|
-| **CI** | Pull request to `master` | Commitlint, hadolint lint, test build |
-| **Release** | Push to `master` | Semantic release, build, scan, push to GHCR |
-| **Update tools** | Weekly (Monday 08:00 UTC) / manual | Checks for new tool versions, opens a PR |
+| **CI** | Pull request to `main` | Commitlint, hadolint lint, test build |
+| **Release** | Push to `main` | Semantic release, build, scan, push to GHCR |
+| **Renovate** | Automated | Keeps tool versions and dependencies up to date via PRs |
 
 ### Release process
 
-Releases are fully automated via [semantic-release](https://github.com/semantic-release/semantic-release). Pushing to `master` triggers version analysis based on [Conventional Commits](https://www.conventionalcommits.org/):
+Releases are fully automated via [semantic-release](https://github.com/semantic-release/semantic-release). Pushing to `main` triggers version analysis based on [Conventional Commits](https://www.conventionalcommits.org/). Tool versions are kept up to date automatically by [Renovate](https://docs.renovatebot.com/).
 
 | Commit prefix | Version bump |
 |---------------|-------------|
@@ -99,7 +99,7 @@ registry: ghcr.io/deerhide/python-github-runner
 build:
   format: oci
   args:
-    - RUNNER_VERSION=latest
+    - RUNNER_VERSION=2.321.0
     - ARGO_VERSION=3.6.4
     - KARGO_VERSION=1.9.2
     - PACK_VERSION=0.36.4
@@ -186,8 +186,8 @@ git commit -m "WIP"
 ├── .github/
 │   └── workflows/
 │       ├── ci.yaml                      # PR validation
-│       ├── release.yaml                 # Semantic release + build + push
-│       └── update-tools.yaml            # Automated tool version updates
+│       └── release.yaml                 # Semantic release + build + push
+├── renovate.json                        # Renovate dependency update config
 └── scripts/
     ├── builder.sh                       # Local build orchestration
     ├── install_tools.sh                 # Build tool installer

@@ -2,7 +2,7 @@ name: Release
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 permissions:
   contents: write
@@ -95,8 +95,7 @@ jobs:
           buildah push "${IMAGE_NAME}:${IMAGE_VERSION}" "oci-archive:build/${IMAGE_NAME}.tar"
 
           # Load into Docker daemon for dive scan
-          docker load -i "build/${IMAGE_NAME}.tar"
-          docker tag "$(docker images -q | head -1)" "${IMAGE_NAME}:${IMAGE_VERSION}"
+          skopeo copy "oci-archive:build/${IMAGE_NAME}.tar" "docker-daemon:${IMAGE_NAME}:${IMAGE_VERSION}"
 
       - name: Dive filesystem scan
         env:

@@ -6,29 +6,17 @@ ARG APP_HOME=/home/runner
 
 USER root
 
-# Update and upgrade the system
-RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get autoremove -y \
-    && apt-get autoclean -y
-
-# Add Python 3.12, 3.13 and 3.14
-# Add deadsnake apt repository
+# System upgrade, Python 3.12/3.13/3.14 (deadsnakes), skopeo, buildah
 # hadolint ignore=DL3008
 RUN apt-get update \
+    && apt-get upgrade -y \
     && apt-get install --no-install-recommends -y gnupg ca-certificates software-properties-common curl \
     && DEBIAN_FRONTEND=noninteractive add-apt-repository -y ppa:deadsnakes/ppa \
     && apt-get update \
-    && apt-get install --no-install-recommends -y python3.12 python3.13 python3.14 \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install skopeo and buildah
-# hadolint ignore=DL3008
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y skopeo buildah \
+    && apt-get install --no-install-recommends -y \
+       python3.12 python3.13 python3.14 \
+       skopeo buildah \
+    && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
