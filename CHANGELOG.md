@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/DeerHide/python-github-runner/compare/v1.0.1...v1.0.2) (2026-02-19)
+
+
+### Bug Fixes
+
+* use bash arrays for BUILD_ARGS and LABELS to handle values with spaces ([0dd5806](https://github.com/DeerHide/python-github-runner/commit/0dd5806532c3cd3956767434f397b62576464eca))
+
 ## [1.0.1](https://github.com/DeerHide/python-github-runner/compare/v1.0.0...v1.0.1) (2026-02-19)
 
 
