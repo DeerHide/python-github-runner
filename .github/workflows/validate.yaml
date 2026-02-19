@@ -92,4 +92,4 @@ jobs:
           trivy image \
             --severity HIGH,CRITICAL \
             --exit-code 1 \
-            --input "build/${IMAGE_NAME}.tar"
+            "${IMAGE_NAME}:test"
