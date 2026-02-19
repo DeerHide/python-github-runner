@@ -9,8 +9,12 @@ permissions:
   packages: write
 
 jobs:
+  validate:
+    uses: ./.github/workflows/validate.yaml
+
   release:
     name: Semantic release
+    needs: validate
     runs-on: ubuntu-latest
     outputs:
       new_release_published: ${{ steps.semantic.outputs.new_release_published }}
@@ -30,7 +34,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-and-push:
-    name: Build, scan & push
+    name: Build & push
     needs: release
     if: needs.release.outputs.new_release_published == 'true'
     runs-on: ubuntu-latest
@@ -48,11 +52,6 @@ jobs:
           echo "image_name=$(yq e '.name' manifest.yaml)" >> "$GITHUB_OUTPUT"
           echo "registry=$(yq e '.registry' manifest.yaml)" >> "$GITHUB_OUTPUT"
           echo "format=$(yq e '.build.format' manifest.yaml)" >> "$GITHUB_OUTPUT"
-
-      - name: Validate Containerfile
-        run: |
-          docker pull -q ghcr.io/hadolint/hadolint:latest
-          docker run --rm -i -v "$(pwd)/.hadolint.yaml:/.hadolint.yaml:ro" hadolint/hadolint:latest hadolint --config /.hadolint.yaml - < Containerfile
 
       - name: Build image
         env:
@@ -89,34 +88,9 @@ jobs:
             --tag "${IMAGE_NAME}:${IMAGE_VERSION}" \
             .
 
-          # Save to OCI archive for scanning and pushing
+          # Save to OCI archive for pushing
           mkdir -p build
           buildah push "${IMAGE_NAME}:${IMAGE_VERSION}" "oci-archive:build/${IMAGE_NAME}.tar"
-
-          # Load into Docker daemon for dive scan
-          skopeo copy "oci-archive:build/${IMAGE_NAME}.tar" "docker-daemon:${IMAGE_NAME}:${IMAGE_VERSION}"
-
-      - name: Dive filesystem scan
-        env:
-          IMAGE_NAME: ${{ steps.manifest.outputs.image_name }}
-        run: dive --ci --source=docker "${IMAGE_NAME}:${IMAGE_VERSION}"
-
-      - name: Cache Trivy vulnerability DB
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/trivy
-          key: trivy-db-${{ runner.os }}-${{ github.run_id }}
-          restore-keys: |
-            trivy-db-${{ runner.os }}-
-
-      - name: Trivy vulnerability scan
-        env:
-          IMAGE_NAME: ${{ steps.manifest.outputs.image_name }}
-        run: |
-          trivy image \
-            --severity HIGH,CRITICAL \
-            --exit-code 1 \
-            "oci-archive:build/${IMAGE_NAME}.tar"
 
       - name: Login to GHCR
         env:

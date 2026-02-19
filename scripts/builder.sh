@@ -288,6 +288,13 @@ trivy_scan () {
     set +e
     trivy_scan_exec=$(\
             trivy image \
+            --scanners vuln \
+            --ignore-unfixed \
+            --pkg-types library \
+            --skip-dirs /home/runner/externals \
+            --skip-dirs /usr/local/lib/docker \
+            --skip-files /usr/bin/dockerd \
+            --ignorefile .trivyignore \
             --input ${BUILD_DIR}/${IMAGE_NAME}-${IMAGE_TAG}.tar \
             --format github \
             --severity HIGH,CRITICAL \
