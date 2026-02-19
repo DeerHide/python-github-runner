@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/DeerHide/python-github-runner/compare/v1.0.0...v1.0.1) (2026-02-19)
+
+
+### Bug Fixes
+
+* **ci:** add missing -y flags and fix trivy command in release pipeline ([33ca427](https://github.com/DeerHide/python-github-runner/commit/33ca4270e9784e4129a4c61938fbcb9f2850a92f))
+
 # 1.0.0 (2026-02-19)
 
 
