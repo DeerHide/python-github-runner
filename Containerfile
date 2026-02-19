@@ -1,4 +1,4 @@
-ARG RUNNER_VERSION=latest
+ARG RUNNER_VERSION=2.321.0
 
 FROM ghcr.io/actions/runner:${RUNNER_VERSION} as base
 
@@ -25,17 +25,10 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install skopeo
+# Install skopeo and buildah
 # hadolint ignore=DL3008
 RUN apt-get update \
-    && apt-get install --no-install-recommends -y skopeo \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install buildah
-# hadolint ignore=DL3008
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y buildah \
+    && apt-get install --no-install-recommends -y skopeo buildah \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -101,17 +94,6 @@ RUN curl -sSL -o /tmp/pack.tgz \
 # Install pre-commit
 # hadolint ignore=DL3013
 RUN pip install --no-cache-dir pre-commit
-
-# Install Poetry latest version and add it to PATH
-# hadolint ignore=DL4006
-RUN curl -sSL https://install.python-poetry.org | python3 -
-
-# Install UV
-# hadolint ignore=DL4006
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
-
-# Add Poetry and UV to PATH
-RUN echo "export PATH=\"${APP_HOME}/.local/bin:\$PATH\"" >> ~/.bashrc
 
 FROM base as runtime
 

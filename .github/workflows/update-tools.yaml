@@ -26,6 +26,7 @@ jobs:
             gh api "repos/${repo}/releases/latest" --jq '.tag_name' | sed 's/^v//'
           }
 
+          RUNNER_LATEST=$(get_latest_version "actions/runner")
           ARGO_LATEST=$(get_latest_version "argoproj/argo-workflows")
           KARGO_LATEST=$(get_latest_version "akuity/kargo")
           PACK_LATEST=$(get_latest_version "buildpacks/pack")
@@ -33,6 +34,7 @@ jobs:
           HADOLINT_LATEST=$(get_latest_version "hadolint/hadolint")
           YQ_LATEST=$(get_latest_version "mikefarah/yq")
 
+          echo "runner=${RUNNER_LATEST}" >> "$GITHUB_OUTPUT"
           echo "argo=${ARGO_LATEST}" >> "$GITHUB_OUTPUT"
           echo "kargo=${KARGO_LATEST}" >> "$GITHUB_OUTPUT"
           echo "pack=${PACK_LATEST}" >> "$GITHUB_OUTPUT"
@@ -40,6 +42,7 @@ jobs:
           echo "hadolint=${HADOLINT_LATEST}" >> "$GITHUB_OUTPUT"
           echo "yq=${YQ_LATEST}" >> "$GITHUB_OUTPUT"
 
+          RUNNER_CURRENT=$(grep -oP 'RUNNER_VERSION=\K[0-9.]+' Containerfile)
           ARGO_CURRENT=$(grep -oP 'ARGO_VERSION=\K[0-9.]+' Containerfile)
           KARGO_CURRENT=$(grep -oP 'KARGO_VERSION=\K[0-9.]+' Containerfile)
           PACK_CURRENT=$(grep -oP 'PACK_VERSION=\K[0-9.]+' Containerfile)
@@ -47,6 +50,7 @@ jobs:
           HADOLINT_CURRENT=$(grep -oP 'HADOLINT_VERSION=\K[0-9.]+' Containerfile)
           YQ_CURRENT=$(grep -oP 'YQ_VERSION=\K[0-9.]+' Containerfile)
 
+          echo "runner_current=${RUNNER_CURRENT}" >> "$GITHUB_OUTPUT"
           echo "argo_current=${ARGO_CURRENT}" >> "$GITHUB_OUTPUT"
           echo "kargo_current=${KARGO_CURRENT}" >> "$GITHUB_OUTPUT"
           echo "pack_current=${PACK_CURRENT}" >> "$GITHUB_OUTPUT"
@@ -55,6 +59,9 @@ jobs:
           echo "yq_current=${YQ_CURRENT}" >> "$GITHUB_OUTPUT"
 
           UPDATES=""
+          if [ "${RUNNER_CURRENT}" != "${RUNNER_LATEST}" ]; then
+            UPDATES="${UPDATES}- GitHub Actions Runner: ${RUNNER_CURRENT} -> ${RUNNER_LATEST}\n"
+          fi
           if [ "${ARGO_CURRENT}" != "${ARGO_LATEST}" ]; then
             UPDATES="${UPDATES}- Argo Workflows CLI: ${ARGO_CURRENT} -> ${ARGO_LATEST}\n"
           fi
@@ -91,12 +98,14 @@ jobs:
       - name: Update versions in Containerfile and manifest
         if: steps.versions.outputs.has_updates == 'true'
         env:
+          RUNNER_LATEST: ${{ steps.versions.outputs.runner }}
           ARGO_LATEST: ${{ steps.versions.outputs.argo }}
           KARGO_LATEST: ${{ steps.versions.outputs.kargo }}
           PACK_LATEST: ${{ steps.versions.outputs.pack }}
           DIVE_LATEST: ${{ steps.versions.outputs.dive }}
           HADOLINT_LATEST: ${{ steps.versions.outputs.hadolint }}
           YQ_LATEST: ${{ steps.versions.outputs.yq }}
+          RUNNER_CURRENT: ${{ steps.versions.outputs.runner_current }}
           ARGO_CURRENT: ${{ steps.versions.outputs.argo_current }}
           KARGO_CURRENT: ${{ steps.versions.outputs.kargo_current }}
           PACK_CURRENT: ${{ steps.versions.outputs.pack_current }}
@@ -111,6 +120,7 @@ jobs:
             fi
           }
 
+          update_version "RUNNER_VERSION" "${RUNNER_CURRENT}" "${RUNNER_LATEST}"
           update_version "ARGO_VERSION" "${ARGO_CURRENT}" "${ARGO_LATEST}"
           update_version "KARGO_VERSION" "${KARGO_CURRENT}" "${KARGO_LATEST}"
           update_version "PACK_VERSION" "${PACK_CURRENT}" "${PACK_LATEST}"

@@ -36,5 +36,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install yq
+        run: |
+          sudo curl -sSL -o /usr/local/bin/yq "https://github.com/mikefarah/yq/releases/download/v4.45.4/yq_linux_amd64"
+          sudo chmod +x /usr/local/bin/yq
+
       - name: Build image
-        run: docker build -f Containerfile -t test-build .
+        run: |
+          BUILD_ARGS=""
+          for arg in $(yq e '.build.args[]' manifest.yaml); do
+            BUILD_ARGS="${BUILD_ARGS} --build-arg ${arg}"
+          done
+          # shellcheck disable=SC2086
+          docker build -f Containerfile ${BUILD_ARGS} -t test-build .

@@ -52,7 +52,7 @@ jobs:
       - name: Validate Containerfile
         run: |
           docker pull -q ghcr.io/hadolint/hadolint:latest
-          docker run --rm -i hadolint/hadolint:latest < Containerfile
+          docker run --rm -i -v "$(pwd)/.hadolint.yaml:/.hadolint.yaml:ro" hadolint/hadolint:latest hadolint --config /.hadolint.yaml - < Containerfile
 
       - name: Build image
         env:
@@ -95,8 +95,8 @@ jobs:
           buildah push "${IMAGE_NAME}:${IMAGE_VERSION}" "oci-archive:build/${IMAGE_NAME}.tar"
 
           # Load into Docker daemon for dive scan
-          docker load -i "build/${IMAGE_NAME}.tar" 2>/dev/null || true
-          docker tag "$(docker images -q | head -1)" "${IMAGE_NAME}:${IMAGE_VERSION}" 2>/dev/null || true
+          docker load -i "build/${IMAGE_NAME}.tar"
+          docker tag "$(docker images -q | head -1)" "${IMAGE_NAME}:${IMAGE_VERSION}"
 
       - name: Dive filesystem scan
         env:
@@ -123,14 +123,17 @@ jobs:
           IMAGE_NAME: ${{ steps.manifest.outputs.image_name }}
           REGISTRY: ${{ steps.manifest.outputs.registry }}
         run: |
-          MAJOR_MINOR="${IMAGE_VERSION%.*}"
-          MAJOR="${IMAGE_VERSION%%.*}"
+          IFS='.' read -r MAJOR MINOR PATCH <<< "${IMAGE_VERSION}"
+          if [ -z "${MAJOR}" ] || [ -z "${MINOR}" ] || [ -z "${PATCH}" ]; then
+            echo "Error: IMAGE_VERSION '${IMAGE_VERSION}' is not valid semver (expected MAJOR.MINOR.PATCH)"
+            exit 1
+          fi
 
           # Push semantic version tag (1.2.3)
           skopeo copy --all "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${IMAGE_VERSION}"
 
           # Push major.minor tag (1.2)
-          skopeo copy --all "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${MAJOR_MINOR}"
+          skopeo copy --all "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${MAJOR}.${MINOR}"
 
           # Push major tag (1)
           skopeo copy --all "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${MAJOR}"
