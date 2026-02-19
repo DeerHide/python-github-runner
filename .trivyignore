@@ -1,0 +1,33 @@
+# Base-image vulnerabilities inherited from ghcr.io/actions/actions-runner.
+# These cannot be fixed in this repo; they are tracked here until the upstream
+# runner image is updated. See README "Security" and RUNNER_VERSION in manifest.yaml.
+# Expiration causes Trivy to re-report after the date so we re-evaluate when
+# upgrading the base image (e.g. via Renovate).
+#
+# Ubuntu (linux-libc-dev / kernel)
+CVE-2024-35870 exp:2026-08-19T00:00:00Z
+CVE-2024-53179 exp:2026-08-19T00:00:00Z
+CVE-2025-37849 exp:2026-08-19T00:00:00Z
+CVE-2025-37899 exp:2026-08-19T00:00:00Z
+CVE-2025-38118 exp:2026-08-19T00:00:00Z
+#
+# Node (runner externals/node20)
+CVE-2024-21538 exp:2026-08-19T00:00:00Z
+CVE-2025-64756 exp:2026-08-19T00:00:00Z
+CVE-2026-26996 exp:2026-08-19T00:00:00Z
+CVE-2026-23745 exp:2026-08-19T00:00:00Z
+CVE-2026-23950 exp:2026-08-19T00:00:00Z
+CVE-2026-24842 exp:2026-08-19T00:00:00Z
+CVE-2026-26960 exp:2026-08-19T00:00:00Z
+#
+# .NET (Runner.Plugins / Runner.Sdk deps)
+CVE-2024-38095 exp:2026-08-19T00:00:00Z
+#
+# Go binaries (containerd, containerd-shim-runc-v2, docker-buildx – stdlib)
+CVE-2025-68121 exp:2026-08-19T00:00:00Z
+CVE-2025-47907 exp:2026-08-19T00:00:00Z
+CVE-2025-58183 exp:2026-08-19T00:00:00Z
+CVE-2025-61726 exp:2026-08-19T00:00:00Z
+CVE-2025-61728 exp:2026-08-19T00:00:00Z
+CVE-2025-61729 exp:2026-08-19T00:00:00Z
+CVE-2025-61730 exp:2026-08-19T00:00:00Z

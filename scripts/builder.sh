@@ -288,6 +288,7 @@ trivy_scan () {
     set +e
     trivy_scan_exec=$(\
             trivy image \
+            --ignorefile .trivyignore \
             --input ${BUILD_DIR}/${IMAGE_NAME}-${IMAGE_TAG}.tar \
             --format github \
             --severity HIGH,CRITICAL \
