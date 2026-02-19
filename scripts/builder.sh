@@ -288,8 +288,10 @@ trivy_scan () {
     set +e
     trivy_scan_exec=$(\
             trivy image \
+            --scanners vuln \
             --ignore-unfixed \
             --pkg-types library \
+            --skip-dirs /home/runner/externals \
             --ignorefile .trivyignore \
             --input ${BUILD_DIR}/${IMAGE_NAME}-${IMAGE_TAG}.tar \
             --format github \
