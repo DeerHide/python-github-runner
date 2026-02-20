@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/DeerHide/python-github-runner/compare/v1.0.4...v1.0.5) (2026-02-20)
+
+
+### Bug Fixes
+
+* **ci:** remove --all flag from skopeo copy to fix registry push ([1602822](https://github.com/DeerHide/python-github-runner/commit/1602822af22b17eb6574d798c3a592e0a86fe734))
+
 ## [1.0.4](https://github.com/DeerHide/python-github-runner/compare/v1.0.3...v1.0.4) (2026-02-20)
 
 
