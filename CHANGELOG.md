@@ -1,3 +1,13 @@
+## [1.0.4](https://github.com/DeerHide/python-github-runner/compare/v1.0.3...v1.0.4) (2026-02-20)
+
+
+### Bug Fixes
+
+* add .trivyignore for base-image CVEs and document security ([706ba83](https://github.com/DeerHide/python-github-runner/commit/706ba83c5a683a1e2c76cd217529d29d7d5c9aea))
+* **ci:** scan image from Docker daemon in Trivy step ([54334d3](https://github.com/DeerHide/python-github-runner/commit/54334d368df683df7327bac34af29dd772b75f38))
+* **ci:** use --input flag for trivy OCI archive scan ([88da58a](https://github.com/DeerHide/python-github-runner/commit/88da58a85d198bd7a1438f268d5bb5a1e3472609))
+* use +0000 in .trivyignore exp dates for Trivy parse ([e2d66c5](https://github.com/DeerHide/python-github-runner/commit/e2d66c551b5d1c5871945a8cc5d8c153fdacfdc6))
+
 ## [1.0.3](https://github.com/DeerHide/python-github-runner/compare/v1.0.2...v1.0.3) (2026-02-19)
 
 
