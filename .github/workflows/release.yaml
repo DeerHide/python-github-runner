@@ -109,16 +109,16 @@ jobs:
           fi
 
           # Push semantic version tag (1.2.3)
-          skopeo copy --all "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${IMAGE_VERSION}"
+          skopeo copy "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${IMAGE_VERSION}"
 
           # Push major.minor tag (1.2)
-          skopeo copy --all "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${MAJOR}.${MINOR}"
+          skopeo copy "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${MAJOR}.${MINOR}"
 
           # Push major tag (1)
-          skopeo copy --all "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${MAJOR}"
+          skopeo copy "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:${MAJOR}"
 
           # Push latest tag
-          skopeo copy --all "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:latest"
+          skopeo copy "oci-archive:build/${IMAGE_NAME}.tar" "docker://${REGISTRY}:latest"
 
       - name: Verify pushed image
         env:
