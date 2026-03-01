@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/DeerHide/python-github-runner/compare/v1.0.6...v1.0.7) (2026-03-01)
+
+
+### Bug Fixes
+
+* **container:** bootstrap pip with --break-system-packages for PEP 668 ([12eb4cf](https://github.com/DeerHide/python-github-runner/commit/12eb4cf891e570ea32023ba9aec30fb2a241f1bd))
+
 ## [Unreleased]
 
 ### Added
