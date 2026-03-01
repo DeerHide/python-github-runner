@@ -22,11 +22,13 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# deadsnakes PPA does not ship python3.x-pip or ensurepip; bootstrap via get-pip.py
+# deadsnakes PPA does not ship python3.x-pip; bootstrap via get-pip.py.
+# PEP 668 marks the environment as externally managed; --break-system-packages is
+# acceptable in a container image where we own the environment.
 # hadolint ignore=DL4006
 RUN curl -sSL https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py \
-    && python3.12 /tmp/get-pip.py --no-cache-dir \
-    && python3.13 /tmp/get-pip.py --no-cache-dir \
+    && python3.12 /tmp/get-pip.py --no-cache-dir --break-system-packages \
+    && python3.13 /tmp/get-pip.py --no-cache-dir --break-system-packages \
     && rm /tmp/get-pip.py
 
 # Configure buildah storage for container/rootless usage
