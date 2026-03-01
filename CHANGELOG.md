@@ -4,6 +4,10 @@
 
 * **ci:** scheduled workflow to update GitHub Actions runner version daily (push to main, no human intervention; requires `REPO_PAT` secret)
 
+### Changed
+
+* **security:** add CVE-2026-24051 to .trivyignore (OpenTelemetry SDK in containerd, trivy, argo)
+
 ### Fixed
 
 * **container:** bootstrap pip with --break-system-packages for PEP 668 (externally-managed-environment)

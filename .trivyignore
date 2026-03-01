@@ -34,6 +34,7 @@ CVE-2025-61730 exp:2026-08-19
 #
 # Go binaries we install (dive, argo, kargo, pack, yq); upgrade versions to clear
 CVE-2023-45288 exp:2026-08-19
+CVE-2026-24051 exp:2026-08-19
 CVE-2024-24790 exp:2026-08-19
 CVE-2024-34156 exp:2026-08-19
 CVE-2024-41110 exp:2026-08-19
