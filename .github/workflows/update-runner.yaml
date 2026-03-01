@@ -1,0 +1,52 @@
+name: Update Runner Version
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-runner:
+    name: Check and update runner version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.REPO_PAT }}
+
+      - name: Get latest runner version
+        id: latest
+        run: |
+          VERSION=$(gh api repos/actions/runner/releases/latest --jq '.tag_name' | sed 's/^v//')
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get current runner version
+        id: current
+        run: |
+          VERSION=$(grep -oP 'RUNNER_VERSION=\K\S+' manifest.yaml | head -1)
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Update version files
+        if: steps.latest.outputs.version != steps.current.outputs.version
+        env:
+          CURRENT: ${{ steps.current.outputs.version }}
+          LATEST: ${{ steps.latest.outputs.version }}
+        run: |
+          sed -i "s/RUNNER_VERSION=${CURRENT}/RUNNER_VERSION=${LATEST}/g" \
+            Containerfile manifest.yaml
+
+      - name: Commit and push
+        if: steps.latest.outputs.version != steps.current.outputs.version
+        env:
+          LATEST: ${{ steps.latest.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Containerfile manifest.yaml
+          git commit -m "fix(deps): update github actions runner to ${LATEST}"
+          git push
