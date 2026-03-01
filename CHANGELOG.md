@@ -4,6 +4,10 @@
 
 * **ci:** scheduled workflow to update GitHub Actions runner version daily (push to main, no human intervention; requires `REPO_PAT` secret)
 
+### Fixed
+
+* **container:** bootstrap pip with --break-system-packages for PEP 668 (externally-managed-environment)
+
 ## [1.0.6](https://github.com/DeerHide/python-github-runner/compare/v1.0.5...v1.0.6) (2026-03-01)
 
 ### Bug Fixes
