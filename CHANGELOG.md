@@ -1,3 +1,9 @@
+## [Unreleased]
+
+### Bug Fixes
+
+* **deps:** upgrade Actions runner from 2.321.0 to 2.332.0 (v2.321.0 deprecated by GitHub)
+
 ## [1.0.3](https://github.com/DeerHide/python-github-runner/compare/v1.0.2...v1.0.3) (2026-02-19)
 
 
