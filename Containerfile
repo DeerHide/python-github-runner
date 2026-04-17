@@ -47,7 +47,7 @@ RUN curl -fsSL https://aquasecurity.github.io/trivy-repo/deb/public.key \
     && rm -rf /var/lib/apt/lists/*
 
 # Install dive (container filesystem analysis)
-ARG DIVE_VERSION=0.12.0
+ARG DIVE_VERSION=0.13.1
 # hadolint ignore=DL3008
 RUN curl -sSL -o /tmp/dive.deb \
       "https://github.com/wagoodman/dive/releases/download/v${DIVE_VERSION}/dive_${DIVE_VERSION}_linux_amd64.deb" \
@@ -58,19 +58,19 @@ RUN curl -sSL -o /tmp/dive.deb \
     && rm -rf /var/lib/apt/lists/*
 
 # Install hadolint (Dockerfile/Containerfile linter)
-ARG HADOLINT_VERSION=2.12.0
+ARG HADOLINT_VERSION=2.14.0
 RUN curl -sSL -o /usr/local/bin/hadolint \
       "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/hadolint-Linux-x86_64" \
     && chmod +x /usr/local/bin/hadolint
 
 # Install yq (YAML processor)
-ARG YQ_VERSION=4.45.4
+ARG YQ_VERSION=4.53.2
 RUN curl -sSL -o /usr/local/bin/yq \
       "https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_amd64" \
     && chmod +x /usr/local/bin/yq
 
 # Install Argo Workflows CLI
-ARG ARGO_VERSION=3.6.4
+ARG ARGO_VERSION=4.0.4
 RUN curl -sSL -o /tmp/argo-linux-amd64.gz \
       "https://github.com/argoproj/argo-workflows/releases/download/v${ARGO_VERSION}/argo-linux-amd64.gz" \
     && gunzip /tmp/argo-linux-amd64.gz \
@@ -78,13 +78,13 @@ RUN curl -sSL -o /tmp/argo-linux-amd64.gz \
     && chmod +x /usr/local/bin/argo
 
 # Install Kargo CLI
-ARG KARGO_VERSION=1.9.2
+ARG KARGO_VERSION=1.9.6
 RUN curl -sSL -o /usr/local/bin/kargo \
       "https://github.com/akuity/kargo/releases/download/v${KARGO_VERSION}/kargo-linux-amd64" \
     && chmod +x /usr/local/bin/kargo
 
 # Install pack (Cloud Native Buildpacks CLI)
-ARG PACK_VERSION=0.36.4
+ARG PACK_VERSION=0.40.2
 RUN curl -sSL -o /tmp/pack.tgz \
       "https://github.com/buildpacks/pack/releases/download/v${PACK_VERSION}/pack-v${PACK_VERSION}-linux.tgz" \
     && tar -xzf /tmp/pack.tgz -C /usr/local/bin/ \

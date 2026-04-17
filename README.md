@@ -101,13 +101,13 @@ registry: ghcr.io/deerhide/python-github-runner
 build:
   format: oci
   args:
-    - RUNNER_VERSION=2.332.0
-    - ARGO_VERSION=3.6.4
-    - KARGO_VERSION=1.9.2
-    - PACK_VERSION=0.36.4
-    - DIVE_VERSION=0.12.0
-    - HADOLINT_VERSION=2.12.0
-    - YQ_VERSION=4.45.4
+    - RUNNER_VERSION=2.333.1
+    - ARGO_VERSION=4.0.4
+    - KARGO_VERSION=1.9.6
+    - PACK_VERSION=0.40.2
+    - DIVE_VERSION=0.13.1
+    - HADOLINT_VERSION=2.14.0
+    - YQ_VERSION=4.53.2
   labels:
     - org.opencontainers.image.source=https://github.com/deerhide/python-github-runner
     - org.opencontainers.image.description="Python GitHub Runner"

@@ -4,6 +4,8 @@
 
 ### Changed
 
+* **deps:** sync Containerfile defaults and local tooling pins to patched versions (argo 4.0.4, kargo 1.9.6, pack 0.40.2, dive 0.13.1, hadolint 2.14.0, yq 4.53.2)
+
 ### Fixed
 
 ## [1.0.8](https://github.com/DeerHide/python-github-runner/compare/v1.0.7...v1.0.8) (2026-04-17)
