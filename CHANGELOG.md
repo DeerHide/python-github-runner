@@ -7,6 +7,8 @@
 ### Changed
 
 * **security:** add CVE-2026-24051 to .trivyignore (OpenTelemetry SDK in containerd, trivy, argo)
+* **deps:** upgrade runner and bundled tool versions in `manifest.yaml` (runner 2.333.1, argo 4.0.4, kargo 1.9.6, pack 0.40.2, dive 0.13.1, hadolint 2.14.0, yq 4.53.2)
+* **ci(trivy):** write JSON report to `build/trivy-report.json` and print a human-readable vulnerability summary when scans fail
 
 ### Fixed
 

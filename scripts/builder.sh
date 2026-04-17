@@ -280,10 +280,14 @@ dive_scan() {
 trivy_scan () {
     
     local trivy_scan_exec
+    local trivy_scan_summary
     local trivy_scan_exit_code
+    local trivy_report_file
 
     log_info "Running trivy scan on ${IMAGE_NAME}:${IMAGE_TAG}"
     log_trace "$(trivy --version)"
+    trivy_report_file="${BUILD_DIR}/trivy-report.json"
+    log_info "Writing trivy report to ${trivy_report_file}"
 
     set +e
     trivy_scan_exec=$(\
@@ -297,8 +301,27 @@ trivy_scan () {
             --ignorefile .trivyignore \
             --input ${BUILD_DIR}/${IMAGE_NAME}-${IMAGE_TAG}.tar \
             --format github \
+            --output "${trivy_report_file}" \
             --severity HIGH,CRITICAL \
             --exit-code 2 \
+            ${IMAGE_NAME}:${IMAGE_TAG} \
+            2>&1
+    )
+
+    # Generate a compact human-readable summary for logs.
+    # Keep this non-blocking so report generation/failure semantics stay unchanged.
+    trivy_scan_summary=$(\
+            trivy image \
+            --scanners vuln \
+            --ignore-unfixed \
+            --pkg-types library \
+            --skip-dirs /home/runner/externals \
+            --skip-dirs /usr/local/lib/docker \
+            --skip-files /usr/bin/dockerd \
+            --ignorefile .trivyignore \
+            --input ${BUILD_DIR}/${IMAGE_NAME}-${IMAGE_TAG}.tar \
+            --severity HIGH,CRITICAL \
+            --exit-code 0 \
             ${IMAGE_NAME}:${IMAGE_TAG} \
             2>&1
     )
@@ -307,12 +330,15 @@ trivy_scan () {
     set -e
     if [[ $trivy_scan_exit_code -eq 2 ]]; then
         echo -e "${WHITE_GRAY}${trivy_scan_exec}${NC}"
+        echo -e "${WHITE_GRAY}${trivy_scan_summary}${NC}"
         log_error "Trivy scan failed"
         exit 1
     elif [[ $trivy_scan_exit_code -eq 1 ]]; then
         echo -e "${WHITE_GRAY}${trivy_scan_exec}${NC}"
+        echo -e "${WHITE_GRAY}${trivy_scan_summary}${NC}"
         log_error "Trivy scan error"
     else
+        log_success "Trivy report generated at ${trivy_report_file}"
         log_success "Trivy scan passed"
     fi
 }
