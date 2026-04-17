@@ -4,6 +4,14 @@
 
 ### Changed
 
+### Fixed
+
+## [1.0.10](https://github.com/DeerHide/python-github-runner/compare/v1.0.9...v1.0.10) (2026-04-17)
+
+### Added
+
+### Changed
+
 * **security:** ignore remaining inherited Go CVEs in `.trivyignore` (expires 2026-08-19) to keep scans actionable until upstream runner/toolchain updates land
 
 ### Fixed
