@@ -2,6 +2,14 @@
 
 ### Added
 
+### Changed
+
+### Fixed
+
+## [1.0.7](https://github.com/DeerHide/python-github-runner/compare/v1.0.6...v1.0.7) (2026-04-17)
+
+### Added
+
 * **ci:** scheduled workflow to update GitHub Actions runner version daily (push to main, no human intervention; requires `REPO_PAT` secret)
 
 ### Changed
