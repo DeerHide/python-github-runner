@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/DeerHide/python-github-runner/compare/v1.1.0...v1.2.0) (2026-04-17)
+
+
+### Features
+
+* **runner:** make poetry and uv shell-agnostic ([2be47c6](https://github.com/DeerHide/python-github-runner/commit/2be47c654099efa62e0a4864ef43a6273a1a83a1))
+
 # [1.1.0](https://github.com/DeerHide/python-github-runner/compare/v1.0.9...v1.1.0) (2026-04-17)
 
 
