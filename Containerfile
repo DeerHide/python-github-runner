@@ -108,6 +108,9 @@ LABEL org.opencontainers.image.vendor="Deerhide"
 USER runner
 WORKDIR ${APP_HOME}
 
+# Ensure user-installed CLI tools are available in all shells (sh/bash, interactive/non-interactive)
+ENV PATH="${APP_HOME}/.local/bin:${PATH}"
+
 # Install Poetry latest version and add it to PATH
 # hadolint ignore=DL4006
 RUN curl -sSL https://install.python-poetry.org | python3 -

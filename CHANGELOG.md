@@ -9,6 +9,8 @@
 
 ### Added
 
+* **runner:** export `${APP_HOME}/.local/bin` at image level so Poetry and UV are discoverable in both `sh` and `bash` execution contexts
+
 ### Changed
 
 ### Fixed
