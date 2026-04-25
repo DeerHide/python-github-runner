@@ -6,6 +6,16 @@
 
 ### Fixed
 
+## [1.2.3](https://github.com/DeerHide/python-github-runner/compare/v1.2.2...v1.2.3) (2026-04-25)
+
+### Added
+
+### Changed
+
+### Fixed
+
+* **container:** align `ENV PATH` and `.bashrc` PATH exports so `/usr/local/bin`, uv, poetry, and local user tools resolve consistently in interactive and non-interactive shells
+
 ## [1.2.2](https://github.com/DeerHide/python-github-runner/compare/v1.2.1...v1.2.2) (2026-04-25)
 
 ### Added
