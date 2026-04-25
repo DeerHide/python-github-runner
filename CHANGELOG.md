@@ -1,3 +1,12 @@
+## [Unreleased]
+
+### Added
+
+### Changed
+
+### Fixed
+
+
 # [1.2.0](https://github.com/DeerHide/python-github-runner/compare/v1.1.0...v1.2.0) (2026-04-17)
 
 
@@ -12,7 +21,8 @@
 
 * trigger release pipeline ([cb88666](https://github.com/DeerHide/python-github-runner/commit/cb88666857422706939330ae21334b1684766bc6))
 
-## [Unreleased]
+
+## [1.2.0](https://github.com/DeerHide/python-github-runner/compare/v1.1.0...v1.2.0) (2026-04-25)
 
 ### Added
 
@@ -22,6 +32,13 @@
 ### Changed
 
 ### Fixed
+
+## [1.1.0](https://github.com/DeerHide/python-github-runner/compare/v1.0.9...v1.1.0) (2026-04-17)
+
+
+### Features
+
+* trigger release pipeline ([cb88666](https://github.com/DeerHide/python-github-runner/commit/cb88666857422706939330ae21334b1684766bc6))
 
 ## [1.0.10](https://github.com/DeerHide/python-github-runner/compare/v1.0.9...v1.0.10) (2026-04-17)
 
