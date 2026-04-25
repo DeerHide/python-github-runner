@@ -136,5 +136,12 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 # hadolint ignore=DL4006
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
+# Pre-cache selected GitHub Actions used by project workflows.
+COPY --chown=runner:runner manifest.yaml /tmp/manifest.yaml
+COPY --chown=runner:runner scripts/cache_actions.sh /tmp/cache_actions.sh
+RUN chmod +x /tmp/cache_actions.sh \
+    && /tmp/cache_actions.sh /tmp/manifest.yaml \
+    && rm -f /tmp/manifest.yaml /tmp/cache_actions.sh
+
 # Add user tool paths to interactive shell PATH
 RUN echo "export PATH=\"/usr/local/bin:${APP_HOME}/.uv/bin:${APP_HOME}/.poetry/bin:${APP_HOME}/.local/bin:\$PATH\"" >> ~/.bashrc

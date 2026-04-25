@@ -1,0 +1,32 @@
+name: Nightly rebuild
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ensure-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Force minor bump if no unreleased commits
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+
+          last_tag="$(git describe --tags --abbrev=0 2>/dev/null || echo '')"
+          if [ -n "${last_tag}" ] && [ "$(git rev-list "${last_tag}..HEAD" --count)" -eq 0 ]; then
+            git commit --allow-empty -m 'feat: nightly rebuild to refresh base image and cached actions'
+            git push origin HEAD:main
+          fi

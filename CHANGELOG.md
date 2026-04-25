@@ -2,9 +2,12 @@
 
 ### Added
 
+* **ci:** add nightly rebuild workflow to force daily semantic-release/image refreshes when no unreleased commits exist
+
 ### Changed
 
 - **release:** configure semantic-release to treat `chore` commits as minor releases and include them in generated release notes
+- **image:** pre-cache commonly used GitHub Actions from `manifest.yaml` into the runner `_work/_actions` directory during image build
 
 ### Fixed
 

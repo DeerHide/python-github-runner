@@ -20,3 +20,12 @@ build:
     - org.opencontainers.image.licenses="MIT"
     - org.opencontainers.image.authors="Deerhide"
     - org.opencontainers.image.vendor="Deerhide"
+cache:
+  actions:
+    - actions/checkout@v6
+    - wagoid/commitlint-github-action@v6
+    - cycjimmy/semantic-release-action@v6
+    - actions/cache@v5
+    - actions/upload-artifact@v7
+    - actions/download-artifact@v8
+    - actions/cache/restore@v5
