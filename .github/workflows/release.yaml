@@ -20,11 +20,11 @@ jobs:
       new_release_published: ${{ steps.semantic.outputs.new_release_published }}
       new_release_version: ${{ steps.semantic.outputs.new_release_version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
 
-      - uses: cycjimmy/semantic-release-action@v4
+      - uses: cycjimmy/semantic-release-action@v6.0.0
         id: semantic
         with:
           extra_plugins: |
@@ -41,7 +41,7 @@ jobs:
     env:
       IMAGE_VERSION: ${{ needs.release.outputs.new_release_version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Install build tools
         run: ./scripts/install_tools.sh
