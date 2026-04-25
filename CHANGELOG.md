@@ -4,6 +4,14 @@
 
 ### Changed
 
+### Fixed
+
+## [1.2.1](https://github.com/DeerHide/python-github-runner/compare/v1.2.0...v1.2.1) (2026-04-25)
+
+### Added
+
+### Changed
+
 * **deps:** update manifest tool versions (argo 4.0.5, kargo 1.10.2, pack 0.40.3) for upcoming image builds
 
 ### Fixed
