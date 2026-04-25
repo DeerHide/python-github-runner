@@ -6,6 +6,14 @@
 
 ### Fixed
 
+## [1.2.2](https://github.com/DeerHide/python-github-runner/compare/v1.2.1...v1.2.2) (2026-04-25)
+
+### Added
+
+### Changed
+
+### Fixed
+
 * **security:** add temporary ignores for newly reported Go/base CVEs (`CVE-2026-32281`, `CVE-2026-32283`, `CVE-2026-33810`, `CVE-2026-35469`) with reevaluation expiry
 
 ## [1.2.1](https://github.com/DeerHide/python-github-runner/compare/v1.2.0...v1.2.1) (2026-04-25)
