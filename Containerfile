@@ -127,8 +127,7 @@ USER runner
 WORKDIR ${APP_HOME}
 
 # Ensure user-installed CLI tools are available in all shells (sh/bash, interactive/non-interactive)
-ENV PATH="${APP_HOME}/.local/bin:${PATH}"
-
+ENV PATH="/usr/local/bin:${APP_HOME}/.uv/bin:${APP_HOME}/.poetry/bin:${APP_HOME}/.local/bin:${PATH}"
 # Install Poetry latest version and add it to PATH
 # hadolint ignore=DL4006
 RUN curl -sSL https://install.python-poetry.org | python3 -
@@ -137,5 +136,5 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 # hadolint ignore=DL4006
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Add Poetry and UV to PATH
-RUN echo "export PATH=\"${APP_HOME}/.local/bin:\$PATH\"" >> ~/.bashrc
+# Add user tool paths to interactive shell PATH
+RUN echo "export PATH=\"/usr/local/bin:${APP_HOME}/.uv/bin:${APP_HOME}/.poetry/bin:${APP_HOME}/.local/bin:\$PATH\"" >> ~/.bashrc
