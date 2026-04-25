@@ -17,6 +17,7 @@
 ### Added
 
 * **runner:** export `${APP_HOME}/.local/bin` at image level so Poetry and UV are discoverable in both `sh` and `bash` execution contexts
+* **tools:** add `syft` and `grype` to the image with pinned versions, Renovate tracking, and documentation updates
 
 ### Changed
 

@@ -46,6 +46,24 @@ RUN curl -fsSL https://aquasecurity.github.io/trivy-repo/deb/public.key \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Install syft (SBOM generator)
+ARG SYFT_VERSION=1.43.0
+RUN curl -sSL -o /tmp/syft.tgz \
+      "https://github.com/anchore/syft/releases/download/v${SYFT_VERSION}/syft_${SYFT_VERSION}_linux_amd64.tar.gz" \
+    && tar -xzf /tmp/syft.tgz -C /tmp syft \
+    && mv /tmp/syft /usr/local/bin/syft \
+    && chmod +x /usr/local/bin/syft \
+    && rm -f /tmp/syft.tgz
+
+# Install grype (vulnerability scanner)
+ARG GRYPE_VERSION=0.111.1
+RUN curl -sSL -o /tmp/grype.tgz \
+      "https://github.com/anchore/grype/releases/download/v${GRYPE_VERSION}/grype_${GRYPE_VERSION}_linux_amd64.tar.gz" \
+    && tar -xzf /tmp/grype.tgz -C /tmp grype \
+    && mv /tmp/grype /usr/local/bin/grype \
+    && chmod +x /usr/local/bin/grype \
+    && rm -f /tmp/grype.tgz
+
 # Install dive (container filesystem analysis)
 ARG DIVE_VERSION=0.13.1
 # hadolint ignore=DL3008

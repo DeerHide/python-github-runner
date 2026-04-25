@@ -34,6 +34,8 @@ These tools allow the image to run its own build pipeline as a self-hosted runne
 | [buildah](https://github.com/containers/buildah) | OCI container image builder |
 | [dive](https://github.com/wagoodman/dive) | Container filesystem analysis |
 | [trivy](https://github.com/aquasecurity/trivy) | Vulnerability scanner |
+| [syft](https://github.com/anchore/syft) | Software bill of materials (SBOM) generator |
+| [grype](https://github.com/anchore/grype) | Container and SBOM vulnerability scanner |
 | [hadolint](https://github.com/hadolint/hadolint) | Dockerfile/Containerfile linter |
 | [yq](https://github.com/mikefarah/yq) | YAML processor |
 | [pre-commit](https://pre-commit.com/) | Git hooks framework |
@@ -106,6 +108,8 @@ build:
     - KARGO_VERSION=1.9.6
     - PACK_VERSION=0.40.2
     - DIVE_VERSION=0.13.1
+    - SYFT_VERSION=1.43.0
+    - GRYPE_VERSION=0.111.1
     - HADOLINT_VERSION=2.14.0
     - YQ_VERSION=4.53.2
   labels:
