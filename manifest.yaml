@@ -6,9 +6,9 @@ build:
   format: oci
   args:
     - RUNNER_VERSION=2.334.0
-    - ARGO_VERSION=4.0.4
-    - KARGO_VERSION=1.9.6
-    - PACK_VERSION=0.40.2
+    - ARGO_VERSION=4.0.5
+    - KARGO_VERSION=1.10.2
+    - PACK_VERSION=0.40.3
     - DIVE_VERSION=0.13.1
     - SYFT_VERSION=1.43.0
     - GRYPE_VERSION=0.111.1

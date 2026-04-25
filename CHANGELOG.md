@@ -4,6 +4,8 @@
 
 ### Changed
 
+* **deps:** update manifest tool versions (argo 4.0.5, kargo 1.10.2, pack 0.40.3) for upcoming image builds
+
 ### Fixed
 
 
