@@ -4,6 +4,8 @@
 
 ### Changed
 
+- **release:** configure semantic-release to treat `chore` commits as minor releases and include them in generated release notes
+
 ### Fixed
 
 ## [1.2.3](https://github.com/DeerHide/python-github-runner/compare/v1.2.2...v1.2.3) (2026-04-25)
