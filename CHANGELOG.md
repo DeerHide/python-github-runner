@@ -1,3 +1,19 @@
+## [1.3.0](https://github.com/DeerHide/python-github-runner/compare/v1.2.3...v1.3.0) (2026-04-25)
+
+### Features
+
+* **image:** pre-cache GitHub Actions and add nightly refresh ([4685661](https://github.com/DeerHide/python-github-runner/commit/4685661b5ab1edfc3b661abfa5737fda0a06555b))
+
+### Bug Fixes
+
+* **ci:** remove scripts/ from .containerignore to allow COPY in Containerfile ([8322d8e](https://github.com/DeerHide/python-github-runner/commit/8322d8e41177c3cdb7756dc29f2563921bac787a))
+
+### Chores
+
+* **ci:** update GitHub Actions and enable Dependabot ([8e26c79](https://github.com/DeerHide/python-github-runner/commit/8e26c79c3b85907b6c467eabdf825f1dca330a29))
+* **release:** include chores in minor versioning ([b19907d](https://github.com/DeerHide/python-github-runner/commit/b19907d5a1b0b68455d9c4387f71ab63f1c0940f))
+* **release:** include conventional commit preset plugin ([0b7ba5f](https://github.com/DeerHide/python-github-runner/commit/0b7ba5f07475e965197885a16d344b8c986d5401))
+
 ## [Unreleased]
 
 ### Added
