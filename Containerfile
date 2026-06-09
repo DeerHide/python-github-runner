@@ -1,4 +1,4 @@
-ARG RUNNER_VERSION=2.334.0
+ARG RUNNER_VERSION=2.335.1
 
 FROM ghcr.io/actions/actions-runner:${RUNNER_VERSION} AS base
 
