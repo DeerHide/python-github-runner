@@ -18,6 +18,7 @@ RUN apt-get update \
        python3.12 python3.12-dev \
        python3.13 python3.13-dev \
        skopeo buildah \
+       unzip \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -114,6 +115,16 @@ RUN curl -sSL -o /tmp/node.tgz \
       "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz" \
     && tar -xzf /tmp/node.tgz -C /usr/local --strip-components=1 \
     && rm -f /tmp/node.tgz
+
+# Install Bun (JS runtime, package manager, bundler, test runner)
+ARG BUN_VERSION=1.3.14
+RUN curl -sSL -o /tmp/bun.zip \
+      "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-x64.zip" \
+    && unzip -q /tmp/bun.zip -d /tmp \
+    && mv /tmp/bun-linux-x64/bun /usr/local/bin/bun \
+    && chmod +x /usr/local/bin/bun \
+    && ln -sf /usr/local/bin/bun /usr/local/bin/bunx \
+    && rm -rf /tmp/bun.zip /tmp/bun-linux-x64
 
 # Install pre-commit
 # hadolint ignore=DL3013

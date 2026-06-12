@@ -92,6 +92,15 @@
       "matchStrings": ["NODE_VERSION=(?<currentValue>\\S+)"],
       "depNameTemplate": "node",
       "datasourceTemplate": "node-version"
+    },
+    {
+      "customType": "regex",
+      "description": "Update Bun version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["BUN_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "oven-sh/bun",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^bun-v?(?<version>.+)$"
     }
   ]
 }
