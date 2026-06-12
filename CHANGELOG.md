@@ -1,3 +1,18 @@
+## [1.4.0](https://github.com/DeerHide/python-github-runner/compare/v1.3.0...v1.4.0) (2026-06-12)
+
+### Features
+
+* **image:** add nodejs and npm tooling ([6daf697](https://github.com/DeerHide/python-github-runner/commit/6daf6977b6c358b7b2fcf68f2ee29ba305d2e427))
+* nightly rebuild to refresh base image and cached actions ([76563be](https://github.com/DeerHide/python-github-runner/commit/76563be70680eda41e4c4f5d09f4e30a0a4ea0bc))
+
+### Bug Fixes
+
+* **deps:** update github actions runner to 2.335.1 ([fb43425](https://github.com/DeerHide/python-github-runner/commit/fb4342540bd80728866fdb9a1d7f5a8ea16ba66b))
+
+### Chores
+
+* **security:** ignore newly reported base CVEs ([3ff5854](https://github.com/DeerHide/python-github-runner/commit/3ff585416b7ba41fbbf22499c0d6e256884d3a79))
+
 ## [1.3.0](https://github.com/DeerHide/python-github-runner/compare/v1.2.3...v1.3.0) (2026-04-25)
 
 ### Features
