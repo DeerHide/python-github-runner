@@ -1,3 +1,9 @@
+## [1.5.1](https://github.com/DeerHide/python-github-runner/compare/v1.5.0...v1.5.1) (2026-06-12)
+
+### Bug Fixes
+
+* **image:** use bun baseline build for non-AVX2 CPUs ([ff2f581](https://github.com/DeerHide/python-github-runner/commit/ff2f5812b6182f82af8bb200b3204dad8c24c834))
+
 ## [1.5.0](https://github.com/DeerHide/python-github-runner/compare/v1.4.0...v1.5.0) (2026-06-12)
 
 ### Features
