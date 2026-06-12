@@ -24,6 +24,7 @@ Container image based on the [GitHub Actions Runner](https://github.com/actions/
 | [Kargo CLI](https://github.com/akuity/kargo) | Application lifecycle orchestration |
 | [pack](https://github.com/buildpacks/pack) | Cloud Native Buildpacks CLI |
 | [skopeo](https://github.com/containers/skopeo) | Container image registry operations |
+| [Node.js](https://nodejs.org/) / npm | JavaScript runtime and package manager (npm/npx bundled) |
 
 ### Build pipeline tools
 
@@ -112,6 +113,7 @@ build:
     - GRYPE_VERSION=0.111.1
     - HADOLINT_VERSION=2.14.0
     - YQ_VERSION=4.53.2
+    - NODE_VERSION=24.16.0
   labels:
     - org.opencontainers.image.source=https://github.com/deerhide/python-github-runner
     - org.opencontainers.image.description="Python GitHub Runner"

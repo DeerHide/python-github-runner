@@ -108,6 +108,13 @@ RUN curl -sSL -o /tmp/pack.tgz \
     && tar -xzf /tmp/pack.tgz -C /usr/local/bin/ \
     && rm /tmp/pack.tgz
 
+# Install Node.js (bundles npm and npx)
+ARG NODE_VERSION=24.16.0
+RUN curl -sSL -o /tmp/node.tgz \
+      "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz" \
+    && tar -xzf /tmp/node.tgz -C /usr/local --strip-components=1 \
+    && rm -f /tmp/node.tgz
+
 # Install pre-commit
 # hadolint ignore=DL3013
 RUN pip3 install --no-cache-dir pre-commit
