@@ -117,14 +117,15 @@ RUN curl -sSL -o /tmp/node.tgz \
     && rm -f /tmp/node.tgz
 
 # Install Bun (JS runtime, package manager, bundler, test runner)
+# Use the baseline build to support runner CPUs without AVX2.
 ARG BUN_VERSION=1.3.14
 RUN curl -sSL -o /tmp/bun.zip \
-      "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-x64.zip" \
+      "https://github.com/oven-sh/bun/releases/download/bun-v${BUN_VERSION}/bun-linux-x64-baseline.zip" \
     && unzip -q /tmp/bun.zip -d /tmp \
-    && mv /tmp/bun-linux-x64/bun /usr/local/bin/bun \
+    && mv /tmp/bun-linux-x64-baseline/bun /usr/local/bin/bun \
     && chmod +x /usr/local/bin/bun \
     && ln -sf /usr/local/bin/bun /usr/local/bin/bunx \
-    && rm -rf /tmp/bun.zip /tmp/bun-linux-x64
+    && rm -rf /tmp/bun.zip /tmp/bun-linux-x64-baseline
 
 # Install pre-commit
 # hadolint ignore=DL3013
