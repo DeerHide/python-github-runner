@@ -1,3 +1,9 @@
+## [1.5.0](https://github.com/DeerHide/python-github-runner/compare/v1.4.0...v1.5.0) (2026-06-12)
+
+### Features
+
+* **image:** add bun tooling ([640d0ad](https://github.com/DeerHide/python-github-runner/commit/640d0ad6b3ce5e23e7b99110a060448995ffb837))
+
 ## [1.4.0](https://github.com/DeerHide/python-github-runner/compare/v1.3.0...v1.4.0) (2026-06-12)
 
 ### Features
