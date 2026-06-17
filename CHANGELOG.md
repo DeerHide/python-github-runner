@@ -1,3 +1,10 @@
+## [1.6.0](https://github.com/DeerHide/python-github-runner/compare/v1.5.1...v1.6.0) (2026-06-17)
+
+### Features
+
+* **image:** add kubectl and jq for kpack builds ([f9771d6](https://github.com/DeerHide/python-github-runner/commit/f9771d6731e1b7f58de6ad155ebd0566bbdc1f34))
+* nightly rebuild to refresh base image and cached actions ([bef420b](https://github.com/DeerHide/python-github-runner/commit/bef420bc0cdf3a8ee6f8b28ec236dbd202c3d6f2))
+
 ## [1.5.1](https://github.com/DeerHide/python-github-runner/compare/v1.5.0...v1.5.1) (2026-06-12)
 
 ### Bug Fixes
