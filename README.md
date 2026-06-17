@@ -22,6 +22,8 @@ Container image based on the [GitHub Actions Runner](https://github.com/actions/
 |------|-------------|
 | [Argo Workflows CLI](https://github.com/argoproj/argo-workflows) | Workflow orchestration on Kubernetes |
 | [Kargo CLI](https://github.com/akuity/kargo) | Application lifecycle orchestration |
+| [kubectl](https://kubernetes.io/docs/reference/kubectl/) | Kubernetes CLI (in-cluster kpack builds from green ARC runners) |
+| [jq](https://jqlang.org/) | JSON processor (kpack git-token refresher CronJob) |
 | [pack](https://github.com/buildpacks/pack) | Cloud Native Buildpacks CLI |
 | [skopeo](https://github.com/containers/skopeo) | Container image registry operations |
 | [Node.js](https://nodejs.org/) / npm | JavaScript runtime and package manager (npm/npx bundled) |

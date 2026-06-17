@@ -18,6 +18,7 @@ RUN apt-get update \
        python3.12 python3.12-dev \
        python3.13 python3.13-dev \
        skopeo buildah \
+       jq \
        unzip \
     && apt-get autoremove -y \
     && apt-get clean \
@@ -101,6 +102,12 @@ ARG KARGO_VERSION=1.9.6
 RUN curl -sSL -o /usr/local/bin/kargo \
       "https://github.com/akuity/kargo/releases/download/v${KARGO_VERSION}/kargo-linux-amd64" \
     && chmod +x /usr/local/bin/kargo
+
+# Install kubectl (in-cluster kpack Build CRs from green ARC runners)
+ARG KUBECTL_VERSION=1.33.2
+RUN curl -sSL -o /usr/local/bin/kubectl \
+      "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" \
+    && chmod +x /usr/local/bin/kubectl
 
 # Install pack (Cloud Native Buildpacks CLI)
 ARG PACK_VERSION=0.40.2
