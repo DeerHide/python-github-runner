@@ -11,7 +11,7 @@ jobs:
     name: Lint Containerfile
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: hadolint/hadolint-action@v3.3.0
         with:
@@ -22,7 +22,7 @@ jobs:
     needs: hadolint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Install build tools
         run: ./scripts/install_tools.sh
