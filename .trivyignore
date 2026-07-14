@@ -19,6 +19,9 @@ CVE-2026-23745 exp:2026-08-19
 CVE-2026-23950 exp:2026-08-19
 CVE-2026-24842 exp:2026-08-19
 CVE-2026-26960 exp:2026-08-19
+# Node.js bundled deps (sigstore, undici in official node dist)
+CVE-2026-48815 exp:2026-08-19
+CVE-2026-12151 exp:2026-08-19
 #
 # .NET (Runner.Plugins / Runner.Sdk deps)
 CVE-2024-38095 exp:2026-08-19

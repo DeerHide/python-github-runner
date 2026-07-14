@@ -117,7 +117,7 @@ RUN curl -sSL -o /tmp/pack.tgz \
     && rm /tmp/pack.tgz
 
 # Install Node.js (bundles npm and npx)
-ARG NODE_VERSION=24.16.0
+ARG NODE_VERSION=24.18.0
 RUN curl -sSL -o /tmp/node.tgz \
       "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.gz" \
     && tar -xzf /tmp/node.tgz -C /usr/local --strip-components=1 \
