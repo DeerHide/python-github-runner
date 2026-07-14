@@ -134,6 +134,36 @@ RUN curl -sSL -o /tmp/bun.zip \
     && ln -sf /usr/local/bin/bun /usr/local/bin/bunx \
     && rm -rf /tmp/bun.zip /tmp/bun-linux-x64-baseline
 
+# Install Redocly CLI (OpenAPI linter and bundler)
+# OpenAPI tool versions kept aligned with customer_backend/scripts/openapi-tools.env
+ARG REDOCLY_CLI_VERSION=2.39.0
+# hadolint ignore=DL3013
+RUN npm install -g "@redocly/cli@${REDOCLY_CLI_VERSION}"
+
+# Install Spectral CLI (OpenAPI/AsyncAPI linter)
+ARG SPECTRAL_CLI_VERSION=6.16.1
+# hadolint ignore=DL3013
+RUN npm install -g "@stoplight/spectral-cli@${SPECTRAL_CLI_VERSION}"
+
+# Install Portman (OpenAPI to Postman contract tests)
+ARG PORTMAN_VERSION=1.35.0
+# hadolint ignore=DL3013
+RUN npm install -g "@apideck/portman@${PORTMAN_VERSION}"
+
+# Install Newman (Postman collection runner)
+ARG NEWMAN_VERSION=6.2.2
+# hadolint ignore=DL3013
+RUN npm install -g "newman@${NEWMAN_VERSION}"
+
+# Install oasdiff (OpenAPI diff and breaking-change detection)
+ARG OASDIFF_VERSION=1.23.0
+RUN curl -sSL -o /tmp/oasdiff.tgz \
+      "https://github.com/Tufin/oasdiff/releases/download/v${OASDIFF_VERSION}/oasdiff_${OASDIFF_VERSION}_linux_amd64.tar.gz" \
+    && tar -xzf /tmp/oasdiff.tgz -C /tmp oasdiff \
+    && mv /tmp/oasdiff /usr/local/bin/oasdiff \
+    && chmod +x /usr/local/bin/oasdiff \
+    && rm -f /tmp/oasdiff.tgz
+
 # Install pre-commit
 # hadolint ignore=DL3013
 RUN pip3 install --no-cache-dir pre-commit

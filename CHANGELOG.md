@@ -1,3 +1,7 @@
+### Features
+
+* **image:** add OpenAPI CLI tooling (redocly, spectral, portman, newman, oasdiff)
+
 ## [1.6.0](https://github.com/DeerHide/python-github-runner/compare/v1.5.1...v1.6.0) (2026-06-17)
 
 ### Features
