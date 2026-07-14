@@ -49,7 +49,7 @@ RUN curl -fsSL https://aquasecurity.github.io/trivy-repo/deb/public.key \
     && rm -rf /var/lib/apt/lists/*
 
 # Install syft (SBOM generator)
-ARG SYFT_VERSION=1.43.0
+ARG SYFT_VERSION=1.46.0
 RUN curl -sSL -o /tmp/syft.tgz \
       "https://github.com/anchore/syft/releases/download/v${SYFT_VERSION}/syft_${SYFT_VERSION}_linux_amd64.tar.gz" \
     && tar -xzf /tmp/syft.tgz -C /tmp syft \
@@ -58,7 +58,7 @@ RUN curl -sSL -o /tmp/syft.tgz \
     && rm -f /tmp/syft.tgz
 
 # Install grype (vulnerability scanner)
-ARG GRYPE_VERSION=0.111.1
+ARG GRYPE_VERSION=0.115.0
 RUN curl -sSL -o /tmp/grype.tgz \
       "https://github.com/anchore/grype/releases/download/v${GRYPE_VERSION}/grype_${GRYPE_VERSION}_linux_amd64.tar.gz" \
     && tar -xzf /tmp/grype.tgz -C /tmp grype \
@@ -84,13 +84,13 @@ RUN curl -sSL -o /usr/local/bin/hadolint \
     && chmod +x /usr/local/bin/hadolint
 
 # Install yq (YAML processor)
-ARG YQ_VERSION=4.53.2
+ARG YQ_VERSION=4.53.3
 RUN curl -sSL -o /usr/local/bin/yq \
       "https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_amd64" \
     && chmod +x /usr/local/bin/yq
 
 # Install Argo Workflows CLI
-ARG ARGO_VERSION=4.0.4
+ARG ARGO_VERSION=4.0.7
 RUN curl -sSL -o /tmp/argo-linux-amd64.gz \
       "https://github.com/argoproj/argo-workflows/releases/download/v${ARGO_VERSION}/argo-linux-amd64.gz" \
     && gunzip /tmp/argo-linux-amd64.gz \
@@ -98,19 +98,19 @@ RUN curl -sSL -o /tmp/argo-linux-amd64.gz \
     && chmod +x /usr/local/bin/argo
 
 # Install Kargo CLI
-ARG KARGO_VERSION=1.9.6
+ARG KARGO_VERSION=1.10.8
 RUN curl -sSL -o /usr/local/bin/kargo \
       "https://github.com/akuity/kargo/releases/download/v${KARGO_VERSION}/kargo-linux-amd64" \
     && chmod +x /usr/local/bin/kargo
 
 # Install kubectl (in-cluster kpack Build CRs from green ARC runners)
-ARG KUBECTL_VERSION=1.33.2
+ARG KUBECTL_VERSION=1.36.2
 RUN curl -sSL -o /usr/local/bin/kubectl \
       "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" \
     && chmod +x /usr/local/bin/kubectl
 
 # Install pack (Cloud Native Buildpacks CLI)
-ARG PACK_VERSION=0.40.2
+ARG PACK_VERSION=0.40.8
 RUN curl -sSL -o /tmp/pack.tgz \
       "https://github.com/buildpacks/pack/releases/download/v${PACK_VERSION}/pack-v${PACK_VERSION}-linux.tgz" \
     && tar -xzf /tmp/pack.tgz -C /usr/local/bin/ \
@@ -134,26 +134,24 @@ RUN curl -sSL -o /tmp/bun.zip \
     && ln -sf /usr/local/bin/bun /usr/local/bin/bunx \
     && rm -rf /tmp/bun.zip /tmp/bun-linux-x64-baseline
 
-# Install Redocly CLI (OpenAPI linter and bundler)
-# OpenAPI tool versions kept aligned with customer_backend/scripts/openapi-tools.env
+# OpenAPI CLIs: oasdiff is a standalone Go binary; npm-only tools share one prefix
+# install with CVE overrides (openapi-tools/package.json). Versions aligned with
+# customer_backend/scripts/openapi-tools.env and manifest.yaml build args.
 ARG REDOCLY_CLI_VERSION=2.39.0
-# hadolint ignore=DL3013
-RUN npm install -g "@redocly/cli@${REDOCLY_CLI_VERSION}"
-
-# Install Spectral CLI (OpenAPI/AsyncAPI linter)
 ARG SPECTRAL_CLI_VERSION=6.16.1
-# hadolint ignore=DL3013
-RUN npm install -g "@stoplight/spectral-cli@${SPECTRAL_CLI_VERSION}"
-
-# Install Portman (OpenAPI to Postman contract tests)
 ARG PORTMAN_VERSION=1.35.0
-# hadolint ignore=DL3013
-RUN npm install -g "@apideck/portman@${PORTMAN_VERSION}"
-
-# Install Newman (Postman collection runner)
 ARG NEWMAN_VERSION=6.2.2
+COPY openapi-tools/package.json /tmp/openapi-tools/
 # hadolint ignore=DL3013
-RUN npm install -g "newman@${NEWMAN_VERSION}"
+RUN npm install --prefix /tmp/openapi-tools --omit=dev --no-package-lock \
+      "@redocly/cli@${REDOCLY_CLI_VERSION}" \
+      "@stoplight/spectral-cli@${SPECTRAL_CLI_VERSION}" \
+      "@apideck/portman@${PORTMAN_VERSION}" \
+      "newman@${NEWMAN_VERSION}" \
+    && for bin in redocly openapi spectral portman newman; do \
+         ln -sf "/tmp/openapi-tools/node_modules/.bin/${bin}" "/usr/local/bin/${bin}"; \
+       done \
+    && rm -rf /root/.npm
 
 # Install oasdiff (OpenAPI diff and breaking-change detection)
 ARG OASDIFF_VERSION=1.23.0

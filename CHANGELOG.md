@@ -62,8 +62,14 @@
 
 - **release:** configure semantic-release to treat `chore` commits as minor releases and include them in generated release notes
 - **image:** pre-cache commonly used GitHub Actions from `manifest.yaml` into the runner `_work/_actions` directory during image build
+- **image:** bump syft, grype, yq, argo, kargo, pack, and kubectl to latest releases
+- **image:** install OpenAPI npm CLIs in a single prefix with transitive dependency CVE overrides
 
 ### Fixed
+
+### Security
+
+- **image:** extend `.trivyignore` for unfixed Go CVEs in base containerd and pinned CLIs
 
 ## [1.2.3](https://github.com/DeerHide/python-github-runner/compare/v1.2.2...v1.2.3) (2026-04-25)
 
