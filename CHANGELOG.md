@@ -58,6 +58,7 @@
 
 ### Added
 
+* **docs:** add AGENTS.md and agent skills for adding tools and build/release workflows
 * **ci:** add nightly rebuild workflow to force daily semantic-release/image refreshes when no unreleased commits exist
 
 ### Changed
