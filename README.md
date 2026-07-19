@@ -29,6 +29,16 @@ Container image based on the [GitHub Actions Runner](https://github.com/actions/
 | [Node.js](https://nodejs.org/) / npm | JavaScript runtime and package manager (npm/npx bundled) |
 | [Bun](https://bun.sh/) | JavaScript runtime, package manager, bundler, and test runner |
 
+### Rust / AWS Lambda
+
+Pre-installed for [`velmios-aws-lambdas`](https://github.com/Laelidona/velmios-aws-lambdas) release builds (`cargo lambda build --arm64`).
+
+| Tool | Version source | Notes |
+|------|----------------|-------|
+| [Rust](https://www.rust-lang.org/) (rustc, cargo) | `RUST_VERSION` | rustup `minimal` profile under `/usr/local/{rustup,cargo}` |
+| [Zig](https://ziglang.org/) | `ZIG_VERSION` | Linker for cargo-lambda cross-compile; `0.14.0` tarball name differs from `0.14.1+` |
+| [cargo-lambda](https://www.cargo-lambda.info/) | `CARGO_LAMBDA_VERSION` | Musl binary from GitHub releases |
+
 ### Build pipeline tools
 
 These tools allow the image to run its own build pipeline as a self-hosted runner.

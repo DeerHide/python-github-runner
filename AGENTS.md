@@ -8,7 +8,7 @@ Self-hosted GitHub Actions runner **container image** for Deerhide / Velmios CI:
 
 - Image: `ghcr.io/deerhide/python-github-runner`
 - Base: `ghcr.io/actions/actions-runner` (`RUNNER_VERSION` in `manifest.yaml`)
-- Includes Python 3.12/3.13 (deadsnakes), Poetry, UV, DevOps CLIs (argo, kargo, kubectl, pack, skopeo, buildah, …), OpenAPI CLIs (redocly, spectral, portman, newman, oasdiff), Node/Bun, and a full OCI build/scan pipeline so the image can build itself.
+- Includes Python 3.12/3.13 (deadsnakes), Poetry, UV, DevOps CLIs (argo, kargo, kubectl, pack, skopeo, buildah, …), OpenAPI CLIs (redocly, spectral, portman, newman, oasdiff), Node/Bun, Rust + Zig + cargo-lambda (AWS Lambda Rust CI), and a full OCI build/scan pipeline so the image can build itself.
 
 Tool inventory and version tables live in [README.md](README.md). Do not duplicate them here.
 

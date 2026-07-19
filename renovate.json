@@ -101,6 +101,35 @@
       "depNameTemplate": "oven-sh/bun",
       "datasourceTemplate": "github-releases",
       "extractVersionTemplate": "^bun-v?(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update Rust toolchain version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["RUST_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "rust",
+      "datasourceTemplate": "github-releases",
+      "packageNameTemplate": "rust-lang/rust",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update Zig version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["ZIG_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "zig",
+      "datasourceTemplate": "github-releases",
+      "packageNameTemplate": "ziglang/zig",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update cargo-lambda version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["CARGO_LAMBDA_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "cargo-lambda/cargo-lambda",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
     }
   ]
 }

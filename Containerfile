@@ -20,6 +20,7 @@ RUN apt-get update \
        skopeo buildah \
        jq \
        unzip \
+       xz-utils \
     && apt-get autoremove -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -162,6 +163,37 @@ RUN curl -sSL -o /tmp/oasdiff.tgz \
     && chmod +x /usr/local/bin/oasdiff \
     && rm -f /tmp/oasdiff.tgz
 
+# Rust toolchain (velmios-aws-lambdas / cargo-lambda CI)
+ARG RUST_VERSION=1.97.1
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:${PATH}
+# hadolint ignore=DL4006
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+      | sh -s -- -y --default-toolchain "${RUST_VERSION}" --profile minimal \
+    && chmod -R a+rX /usr/local/rustup /usr/local/cargo \
+    && rustc --version && cargo --version
+
+# Zig linker for cargo-lambda arm64 cross-builds.
+# 0.14.0 uses zig-linux-x86_64-*; 0.14.1+ renamed to zig-x86_64-linux-* — update URL on bump.
+ARG ZIG_VERSION=0.14.0
+RUN curl -sSL -o /tmp/zig.tar.xz \
+      "https://ziglang.org/download/${ZIG_VERSION}/zig-linux-x86_64-${ZIG_VERSION}.tar.xz" \
+    && tar -xJf /tmp/zig.tar.xz -C /usr/local \
+    && mv "/usr/local/zig-linux-x86_64-${ZIG_VERSION}" /usr/local/zig \
+    && ln -sf /usr/local/zig/zig /usr/local/bin/zig \
+    && rm -f /tmp/zig.tar.xz \
+    && zig version
+
+# cargo-lambda (AWS Lambda Rust packaging)
+ARG CARGO_LAMBDA_VERSION=1.9.1
+RUN curl -sSL -o /tmp/cargo-lambda.tgz \
+      "https://github.com/cargo-lambda/cargo-lambda/releases/download/v${CARGO_LAMBDA_VERSION}/cargo-lambda-v${CARGO_LAMBDA_VERSION}.x86_64-unknown-linux-musl.tar.gz" \
+    && tar -xzf /tmp/cargo-lambda.tgz -C /usr/local/bin cargo-lambda \
+    && chmod +x /usr/local/bin/cargo-lambda \
+    && rm -f /tmp/cargo-lambda.tgz \
+    && cargo lambda --version
+
 # Install pre-commit
 # hadolint ignore=DL3013
 RUN pip3 install --no-cache-dir pre-commit
@@ -198,4 +230,4 @@ RUN chmod +x /tmp/cache_actions.sh \
     && rm -f /tmp/manifest.yaml /tmp/cache_actions.sh
 
 # Add user tool paths to interactive shell PATH
-RUN echo "export PATH=\"/usr/local/bin:${APP_HOME}/.uv/bin:${APP_HOME}/.poetry/bin:${APP_HOME}/.local/bin:\$PATH\"" >> ~/.bashrc
+RUN echo "export PATH=\"/usr/local/bin:/usr/local/cargo/bin:${APP_HOME}/.uv/bin:${APP_HOME}/.poetry/bin:${APP_HOME}/.local/bin:\$PATH\"" >> ~/.bashrc
