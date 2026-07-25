@@ -165,7 +165,7 @@ RUN npm install --prefix /tmp/openapi-tools --omit=dev --no-package-lock \
     && rm -rf /root/.npm
 
 # Install oasdiff (OpenAPI diff and breaking-change detection)
-ARG OASDIFF_VERSION=1.23.0
+ARG OASDIFF_VERSION=1.26.0
 RUN curl -sSL -o /tmp/oasdiff.tgz \
       "https://github.com/Tufin/oasdiff/releases/download/v${OASDIFF_VERSION}/oasdiff_${OASDIFF_VERSION}_linux_amd64.tar.gz" \
     && tar -xzf /tmp/oasdiff.tgz -C /tmp oasdiff \

@@ -86,6 +86,11 @@ CVE-2026-44973 exp:2026-08-19
 CVE-2026-45022 exp:2026-08-19
 CVE-2026-46680 exp:2026-08-19
 #
+# gRPC-Go xDS RBAC / HTTP2 advisory in grpc bundled by gh, argo, grype and syft.
+# Their latest releases still vendor grpc < 1.82.1, and none of these CLIs run an
+# xDS server. Drop once upstream rebuilds against the fixed grpc.
+GHSA-hrxh-6v49-42gf exp:2026-08-19
+#
 # Go stdlib / x/crypto / x/net / containerd — base image and pinned CLIs without fixed releases yet.
 CVE-2026-25681 exp:2026-08-19
 CVE-2026-27136 exp:2026-08-19
