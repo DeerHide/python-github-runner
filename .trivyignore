@@ -22,9 +22,23 @@ CVE-2026-26960 exp:2026-08-19
 # Node.js bundled deps (sigstore, undici in official node dist)
 CVE-2026-48815 exp:2026-08-19
 CVE-2026-12151 exp:2026-08-19
+# npm deps bundled by the pinned node dist (brace-expansion, js-yaml, tar).
+# NODE_VERSION is already the latest 24.x; fixes need a new node release.
+CVE-2026-13149 exp:2026-08-19
+CVE-2026-14257 exp:2026-08-19
+CVE-2026-59869 exp:2026-08-19
+CVE-2026-59873 exp:2026-08-19
+CVE-2026-59874 exp:2026-08-19
 #
 # .NET (Runner.Plugins / Runner.Sdk deps)
 CVE-2024-38095 exp:2026-08-19
+# Microsoft.NETCore.App.Runtime 8.0.28 shipped by actions-runner; RUNNER_VERSION
+# is already the latest, so clearing these needs an upstream runner rebuild.
+CVE-2026-47302 exp:2026-08-19
+CVE-2026-50524 exp:2026-08-19
+CVE-2026-50528 exp:2026-08-19
+CVE-2026-50651 exp:2026-08-19
+CVE-2026-57108 exp:2026-08-19
 #
 # Go binaries (containerd, containerd-shim-runc-v2, docker-buildx – stdlib)
 CVE-2025-68121 exp:2026-08-19
