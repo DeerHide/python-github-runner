@@ -110,6 +110,16 @@ RUN curl -sSL -o /usr/local/bin/kubectl \
       "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" \
     && chmod +x /usr/local/bin/kubectl
 
+# Install GitHub CLI (workflows calling `gh api`, e.g. dependency-graph snapshots)
+ARG GH_CLI_VERSION=2.96.0
+RUN curl -sSL -o /tmp/gh.tgz \
+      "https://github.com/cli/cli/releases/download/v${GH_CLI_VERSION}/gh_${GH_CLI_VERSION}_linux_amd64.tar.gz" \
+    && tar -xzf /tmp/gh.tgz -C /tmp "gh_${GH_CLI_VERSION}_linux_amd64/bin/gh" \
+    && mv "/tmp/gh_${GH_CLI_VERSION}_linux_amd64/bin/gh" /usr/local/bin/gh \
+    && chmod +x /usr/local/bin/gh \
+    && rm -rf /tmp/gh.tgz "/tmp/gh_${GH_CLI_VERSION}_linux_amd64" \
+    && gh --version
+
 # Install pack (Cloud Native Buildpacks CLI)
 ARG PACK_VERSION=0.40.8
 RUN curl -sSL -o /tmp/pack.tgz \
