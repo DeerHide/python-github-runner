@@ -1,3 +1,5 @@
+## [1.9.0](https://github.com/DeerHide/python-github-runner/compare/v1.8.0...v1.9.0) (2026-07-25)
+
 ## [1.8.0](https://github.com/DeerHide/python-github-runner/compare/v1.7.0...v1.8.0) (2026-07-19)
 
 ## [1.7.0](https://github.com/DeerHide/python-github-runner/compare/v1.6.0...v1.7.0) (2026-07-14)
