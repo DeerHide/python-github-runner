@@ -4,6 +4,12 @@
 # Expiration causes Trivy to re-report after the date so we re-evaluate when
 # upgrading the base image (e.g. via Renovate).
 #
+# Python: live site-packages are already patched (setuptools 83 / msgpack 1.2.1).
+# Trivy still reports older versions from deadsnakes/CPython bundled ensurepip
+# or test wheeldata that pip upgrade does not remove. Not loadable at runtime.
+CVE-2025-47273 exp:2026-09-19
+GHSA-6v7p-g79w-8964 exp:2026-09-19
+#
 # Ubuntu (linux-libc-dev / kernel)
 CVE-2024-35870 exp:2026-08-19
 CVE-2024-53179 exp:2026-08-19
