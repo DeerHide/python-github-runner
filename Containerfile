@@ -28,11 +28,15 @@ RUN apt-get update \
 # deadsnakes PPA does not ship python3.x-pip; bootstrap via get-pip.py.
 # PEP 668 marks the environment as externally managed; --break-system-packages is
 # acceptable in a container image where we own the environment.
-# hadolint ignore=DL4006
+# hadolint ignore=DL4006,DL3013
 RUN curl -sSL https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py \
     && python3.12 /tmp/get-pip.py --no-cache-dir --break-system-packages \
     && python3.13 /tmp/get-pip.py --no-cache-dir --break-system-packages \
-    && rm /tmp/get-pip.py
+    && rm /tmp/get-pip.py \
+    && python3.12 -m pip install --no-cache-dir --break-system-packages --upgrade \
+         "setuptools>=78.1.1" "msgpack>=1.2.1" \
+    && python3.13 -m pip install --no-cache-dir --break-system-packages --upgrade \
+         "setuptools>=78.1.1" "msgpack>=1.2.1"
 
 # Configure buildah storage for container/rootless usage
 RUN mkdir -p /etc/containers \
@@ -50,7 +54,7 @@ RUN curl -fsSL https://aquasecurity.github.io/trivy-repo/deb/public.key \
     && rm -rf /var/lib/apt/lists/*
 
 # Install syft (SBOM generator)
-ARG SYFT_VERSION=1.46.0
+ARG SYFT_VERSION=1.50.0
 RUN curl -sSL -o /tmp/syft.tgz \
       "https://github.com/anchore/syft/releases/download/v${SYFT_VERSION}/syft_${SYFT_VERSION}_linux_amd64.tar.gz" \
     && tar -xzf /tmp/syft.tgz -C /tmp syft \
@@ -59,7 +63,7 @@ RUN curl -sSL -o /tmp/syft.tgz \
     && rm -f /tmp/syft.tgz
 
 # Install grype (vulnerability scanner)
-ARG GRYPE_VERSION=0.115.0
+ARG GRYPE_VERSION=0.116.1
 RUN curl -sSL -o /tmp/grype.tgz \
       "https://github.com/anchore/grype/releases/download/v${GRYPE_VERSION}/grype_${GRYPE_VERSION}_linux_amd64.tar.gz" \
     && tar -xzf /tmp/grype.tgz -C /tmp grype \
@@ -91,7 +95,7 @@ RUN curl -sSL -o /usr/local/bin/yq \
     && chmod +x /usr/local/bin/yq
 
 # Install Argo Workflows CLI
-ARG ARGO_VERSION=4.0.7
+ARG ARGO_VERSION=4.0.8
 RUN curl -sSL -o /tmp/argo-linux-amd64.gz \
       "https://github.com/argoproj/argo-workflows/releases/download/v${ARGO_VERSION}/argo-linux-amd64.gz" \
     && gunzip /tmp/argo-linux-amd64.gz \
@@ -99,19 +103,19 @@ RUN curl -sSL -o /tmp/argo-linux-amd64.gz \
     && chmod +x /usr/local/bin/argo
 
 # Install Kargo CLI
-ARG KARGO_VERSION=1.10.8
+ARG KARGO_VERSION=1.11.0
 RUN curl -sSL -o /usr/local/bin/kargo \
       "https://github.com/akuity/kargo/releases/download/v${KARGO_VERSION}/kargo-linux-amd64" \
     && chmod +x /usr/local/bin/kargo
 
 # Install kubectl (in-cluster kpack Build CRs from green ARC runners)
-ARG KUBECTL_VERSION=1.36.2
+ARG KUBECTL_VERSION=1.36.3
 RUN curl -sSL -o /usr/local/bin/kubectl \
       "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" \
     && chmod +x /usr/local/bin/kubectl
 
 # Install GitHub CLI (workflows calling `gh api`, e.g. dependency-graph snapshots)
-ARG GH_CLI_VERSION=2.96.0
+ARG GH_CLI_VERSION=2.97.0
 RUN curl -sSL -o /tmp/gh.tgz \
       "https://github.com/cli/cli/releases/download/v${GH_CLI_VERSION}/gh_${GH_CLI_VERSION}_linux_amd64.tar.gz" \
     && tar -xzf /tmp/gh.tgz -C /tmp "gh_${GH_CLI_VERSION}_linux_amd64/bin/gh" \
@@ -175,7 +179,7 @@ RUN npm install --prefix /tmp/openapi-tools --omit=dev --no-package-lock \
     && rm -rf /root/.npm
 
 # Install oasdiff (OpenAPI diff and breaking-change detection)
-ARG OASDIFF_VERSION=1.26.0
+ARG OASDIFF_VERSION=1.27.0
 RUN curl -sSL -o /tmp/oasdiff.tgz \
       "https://github.com/Tufin/oasdiff/releases/download/v${OASDIFF_VERSION}/oasdiff_${OASDIFF_VERSION}_linux_amd64.tar.gz" \
     && tar -xzf /tmp/oasdiff.tgz -C /tmp oasdiff \
@@ -214,9 +218,13 @@ RUN curl -sSL -o /tmp/cargo-lambda.tgz \
     && rm -f /tmp/cargo-lambda.tgz \
     && cargo lambda --version
 
-# Install pre-commit
+# Install pre-commit; re-pin setuptools/msgpack after its deps settle.
 # hadolint ignore=DL3013
-RUN pip3 install --no-cache-dir pre-commit
+RUN pip3 install --no-cache-dir --break-system-packages pre-commit \
+    && python3.12 -m pip install --no-cache-dir --break-system-packages --upgrade \
+         "setuptools>=78.1.1" "msgpack>=1.2.1" \
+    && python3.13 -m pip install --no-cache-dir --break-system-packages --upgrade \
+         "setuptools>=78.1.1" "msgpack>=1.2.1"
 
 # Base stage must not end as root (hadolint DL3002)
 USER runner

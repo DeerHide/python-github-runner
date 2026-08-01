@@ -70,6 +70,10 @@ CVE-2025-66626 exp:2026-08-19
 CVE-2025-68156 exp:2026-08-19
 CVE-2026-23960 exp:2026-08-19
 CVE-2026-27112 exp:2026-08-19
+# golang.org/x/text infinite-loop (norm.Iter). Fixed in x/text 0.39.0; still
+# vendored <0.39 by base containerd/ctr and several pinned Go CLIs (dive has no
+# newer release). Drop as upstream rebuilds land.
+CVE-2026-56852 exp:2026-09-19
 #
 # Remaining Go-related CVEs from current Trivy report (base/runtime binaries).
 # These are tracked temporarily until upstream runner/base/toolchain refreshes.
