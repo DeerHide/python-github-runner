@@ -127,6 +127,16 @@ RUN curl -sSL -o /tmp/pack.tgz \
     && tar -xzf /tmp/pack.tgz -C /usr/local/bin/ \
     && rm /tmp/pack.tgz
 
+# Install crane (daemonless OCI append/push for kpack -src images; no userns)
+ARG CRANE_VERSION=0.21.8
+RUN curl -sSL -o /tmp/crane.tgz \
+      "https://github.com/google/go-containerregistry/releases/download/v${CRANE_VERSION}/go-containerregistry_Linux_x86_64.tar.gz" \
+    && tar -xzf /tmp/crane.tgz -C /tmp crane \
+    && mv /tmp/crane /usr/local/bin/crane \
+    && chmod +x /usr/local/bin/crane \
+    && rm -f /tmp/crane.tgz \
+    && crane version
+
 # Install Node.js (bundles npm and npx)
 ARG NODE_VERSION=24.18.0
 RUN curl -sSL -o /tmp/node.tgz \

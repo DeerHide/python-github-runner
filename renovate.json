@@ -96,6 +96,15 @@
     },
     {
       "customType": "regex",
+      "description": "Update crane (go-containerregistry) version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["CRANE_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "google/go-containerregistry",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
       "description": "Update Node.js version",
       "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
       "matchStrings": ["NODE_VERSION=(?<currentValue>\\S+)"],

@@ -47,6 +47,7 @@ These tools allow the image to run its own build pipeline as a self-hosted runne
 | Tool | Description |
 |------|-------------|
 | [buildah](https://github.com/containers/buildah) | OCI container image builder |
+| [crane](https://github.com/google/go-containerregistry) | Daemonless OCI append/push (`CRANE_VERSION`; kpack `-src` packaging) |
 | [dive](https://github.com/wagoodman/dive) | Container filesystem analysis |
 | [trivy](https://github.com/aquasecurity/trivy) | Vulnerability scanner |
 | [syft](https://github.com/anchore/syft) | Software bill of materials (SBOM) generator |
