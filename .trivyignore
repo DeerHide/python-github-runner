@@ -28,13 +28,15 @@ CVE-2026-26960 exp:2026-08-19
 # Node.js bundled deps (sigstore, undici in official node dist)
 CVE-2026-48815 exp:2026-08-19
 CVE-2026-12151 exp:2026-08-19
-# npm deps bundled by the pinned node dist (brace-expansion, js-yaml, tar).
-# NODE_VERSION is already the latest 24.x; fixes need a new node release.
+# npm deps bundled by the pinned node dist (brace-expansion, js-yaml, tar, ip-address).
+# NODE_VERSION 24.x still ships these; fixes need a new node/npm release.
 CVE-2026-13149 exp:2026-08-19
 CVE-2026-14257 exp:2026-08-19
 CVE-2026-59869 exp:2026-08-19
 CVE-2026-59873 exp:2026-08-19
 CVE-2026-59874 exp:2026-08-19
+CVE-2026-69152 exp:2026-09-19
+CVE-2026-69192 exp:2026-09-19
 #
 # .NET (Runner.Plugins / Runner.Sdk deps)
 CVE-2024-38095 exp:2026-08-19
