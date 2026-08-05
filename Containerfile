@@ -108,6 +108,13 @@ RUN curl -sSL -o /usr/local/bin/kargo \
       "https://github.com/akuity/kargo/releases/download/v${KARGO_VERSION}/kargo-linux-amd64" \
     && chmod +x /usr/local/bin/kargo
 
+# Install Chainloop CLI (supply-chain attestation craft against red control plane)
+ARG CHAINLOOP_VERSION=1.105.4
+RUN curl -sSL -o /usr/local/bin/chainloop \
+      "https://github.com/chainloop-dev/chainloop/releases/download/v${CHAINLOOP_VERSION}/chainloop-linux-amd64" \
+    && chmod +x /usr/local/bin/chainloop \
+    && chainloop version
+
 # Install kubectl (in-cluster kpack Build CRs from green ARC runners)
 ARG KUBECTL_VERSION=1.36.3
 RUN curl -sSL -o /usr/local/bin/kubectl \

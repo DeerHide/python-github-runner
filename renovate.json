@@ -78,6 +78,15 @@
     },
     {
       "customType": "regex",
+      "description": "Update Chainloop CLI version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["CHAINLOOP_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "chainloop-dev/chainloop",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
       "description": "Update GitHub CLI version",
       "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
       "matchStrings": ["GH_CLI_VERSION=(?<currentValue>\\S+)"],
