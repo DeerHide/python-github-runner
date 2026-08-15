@@ -1,0 +1,12 @@
+# Third-party uses: refs required by Laelidona/github-actions reusable workflows.
+# Kept in sync by scripts/check_action_cache_coverage.sh against a local checkout.
+# Update when github-actions pins change; CI fails if any line is missing from
+# manifest.yaml cache.actions.
+actions/checkout@v6.0.2
+actions/cache@v5.0.3
+actions/cache/restore@v5.0.3
+actions/cache/save@v5.0.3
+actions/upload-artifact@v7.0.0
+actions/download-artifact@v8.0.1
+softprops/action-gh-release@v3.0.2
+slackapi/slack-github-action@v4.0.0

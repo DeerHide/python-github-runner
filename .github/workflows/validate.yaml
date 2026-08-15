@@ -11,18 +11,32 @@ jobs:
     name: Lint Containerfile
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.2
 
       - uses: hadolint/hadolint-action@v3.3.0
         with:
           dockerfile: Containerfile
 
-  build-and-scan:
-    name: Build and scan
-    needs: hadolint
+  action-cache-coverage:
+    name: Action archive cache coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v6.0.2
+      - name: Check required Laelidona github-actions refs are cached
+        run: |
+          chmod +x scripts/check_required_action_refs.sh
+          ./scripts/check_required_action_refs.sh \
+            scripts/required-github-actions-refs.txt \
+            manifest.yaml
+
+  build-and-scan:
+    name: Build and scan
+    needs:
+      - hadolint
+      - action-cache-coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6.0.2
 
       - name: Install build tools
         run: ./scripts/install_tools.sh
@@ -78,7 +92,7 @@ jobs:
         run: dive --ci --source=docker "${IMAGE_NAME}:test"
 
       - name: Cache Trivy vulnerability DB
-        uses: actions/cache@v5
+        uses: actions/cache@v5.0.3
         with:
           path: ~/.cache/trivy
           key: trivy-db-${{ runner.os }}-${{ github.run_id }}

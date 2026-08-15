@@ -35,11 +35,17 @@ build:
     - org.opencontainers.image.authors="Deerhide"
     - org.opencontainers.image.vendor="Deerhide"
 cache:
+  # Exact refs used by Laelidona/github-actions reusable workflows (+ runner CI).
+  # Floating tags miss SHA lookups under ACTIONS_RUNNER_ACTION_ARCHIVE_CACHE.
   actions:
-    - actions/checkout@v6
-    - wagoid/commitlint-github-action@v6
-    - cycjimmy/semantic-release-action@v6
-    - actions/cache@v5
-    - actions/upload-artifact@v7
-    - actions/download-artifact@v8
-    - actions/cache/restore@v5
+    - actions/checkout@v6.0.2
+    - actions/cache@v5.0.3
+    - actions/cache/restore@v5.0.3
+    - actions/cache/save@v5.0.3
+    - actions/upload-artifact@v7.0.0
+    - actions/download-artifact@v8.0.1
+    - softprops/action-gh-release@v3.0.2
+    - slackapi/slack-github-action@v4.0.0
+    - wagoid/commitlint-github-action@v6.2.1
+    - cycjimmy/semantic-release-action@v6.0.0
+    - hadolint/hadolint-action@v3.3.0

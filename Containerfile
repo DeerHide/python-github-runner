@@ -257,11 +257,14 @@ RUN curl -sSL https://install.python-poetry.org | python3 -
 # hadolint ignore=DL4006
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Pre-cache selected GitHub Actions used by project workflows.
+# Pre-cache selected GitHub Actions as ACTIONS_RUNNER_ACTION_ARCHIVE_CACHE.
+# Path must stay outside _work and .cache — ARC emptyDir mounts shadow those.
+ENV ACTIONS_RUNNER_ACTION_ARCHIVE_CACHE=/home/runner/action-archive-cache
 COPY --chown=runner:runner manifest.yaml /tmp/manifest.yaml
 COPY --chown=runner:runner scripts/cache_actions.sh /tmp/cache_actions.sh
 RUN chmod +x /tmp/cache_actions.sh \
-    && /tmp/cache_actions.sh /tmp/manifest.yaml \
+    && ACTIONS_ARCHIVE_CACHE_ROOT="${ACTIONS_RUNNER_ACTION_ARCHIVE_CACHE}" \
+       /tmp/cache_actions.sh /tmp/manifest.yaml \
     && rm -f /tmp/manifest.yaml /tmp/cache_actions.sh
 
 # Add user tool paths to interactive shell PATH
