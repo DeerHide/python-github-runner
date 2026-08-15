@@ -135,3 +135,25 @@ CVE-2026-46597 exp:2026-08-19
 CVE-2026-53488 exp:2026-08-19
 CVE-2026-53489 exp:2026-08-19
 CVE-2026-53492 exp:2026-08-19
+#
+# js-yaml quadratic !!omap (GHSA-5p4m-2wfm-xmqj). openapi-tools overrides 4.3.1;
+# ignore covers any leftover package.json that still declares 4.3.0.
+CVE-2026-59870 exp:2026-09-19
+GHSA-5p4m-2wfm-xmqj exp:2026-09-19
+#
+# Microsoft.NETCore.App.Runtime 8.0.28 in actions-runner 2.336.0 (already latest).
+CVE-2026-62901 exp:2026-09-19
+#
+# Go stdlib 1.26.6 / x/net 0.56.0 — base containerd/docker/runc and pinned CLIs
+# still built with older Go. Drop when upstream rebuilds land.
+CVE-2026-33818 exp:2026-09-19
+CVE-2026-46600 exp:2026-09-19
+CVE-2026-56853 exp:2026-09-19
+CVE-2026-56858 exp:2026-09-19
+CVE-2026-56859 exp:2026-09-19
+CVE-2026-56860 exp:2026-09-19
+CVE-2026-56862 exp:2026-09-19
+#
+# go-git symlink write (CVE-2026-71556). Fixed in go-git 5.19.2; pinned argo /
+# chainloop / pack / syft / grype still vendor 5.19.1. Drop on those bumps.
+CVE-2026-71556 exp:2026-09-19
