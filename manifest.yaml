@@ -5,7 +5,7 @@ registry: ghcr.io/deerhide/python-github-runner
 build:
   format: oci
   args:
-    - RUNNER_VERSION=2.336.0
+    - RUNNER_VERSION=2.337.0
     - ARGO_VERSION=4.0.8
     - KARGO_VERSION=1.11.0
     - CHAINLOOP_VERSION=1.105.4
