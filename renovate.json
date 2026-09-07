@@ -157,6 +157,14 @@
       "depNameTemplate": "cargo-lambda/cargo-lambda",
       "datasourceTemplate": "github-releases",
       "extractVersionTemplate": "^v?(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "description": "Update Playwright (Python) version",
+      "fileMatch": ["^Containerfile$", "^manifest\\.yaml$"],
+      "matchStrings": ["PLAYWRIGHT_VERSION=(?<currentValue>\\S+)"],
+      "depNameTemplate": "playwright",
+      "datasourceTemplate": "pypi"
     }
   ]
 }

@@ -233,6 +233,20 @@ RUN pip3 install --no-cache-dir --break-system-packages pre-commit \
     && python3.13 -m pip install --no-cache-dir --break-system-packages --upgrade \
          "setuptools>=78.1.1" "msgpack>=1.2.1"
 
+# Playwright + Chromium for in-cluster e2e (Laelidona/e2e-tests).
+# Browsers MUST live at /ms-playwright — ARC lite mounts a 2 GiB memory emptyDir
+# on /home/runner/.cache, which would mask ~/.cache/ms-playwright.
+ARG PLAYWRIGHT_VERSION=1.62.0
+ENV PLAYWRIGHT_VERSION=${PLAYWRIGHT_VERSION} \
+    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+# hadolint ignore=DL3008,DL3013
+RUN python3.12 -m pip install --no-cache-dir --break-system-packages \
+      "playwright==${PLAYWRIGHT_VERSION}" \
+    && python3.12 -m playwright install --with-deps chromium \
+    && chmod -R a+rX "${PLAYWRIGHT_BROWSERS_PATH}" \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 # Base stage must not end as root (hadolint DL3002)
 USER runner
 

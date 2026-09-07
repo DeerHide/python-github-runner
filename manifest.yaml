@@ -28,6 +28,7 @@ build:
     - RUST_VERSION=1.97.1
     - ZIG_VERSION=0.14.0
     - CARGO_LAMBDA_VERSION=1.9.1
+    - PLAYWRIGHT_VERSION=1.62.0
   labels:
     - org.opencontainers.image.source=https://github.com/deerhide/python-github-runner
     - org.opencontainers.image.description="Python GitHub Runner"

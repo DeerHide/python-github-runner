@@ -15,6 +15,7 @@ Container image based on the [GitHub Actions Runner](https://github.com/actions/
 | Python | 3.12, 3.13 (via deadsnakes PPA) |
 | Poetry | latest |
 | UV | latest |
+| Playwright (Python) + Chromium | `PLAYWRIGHT_VERSION` (browsers at `/ms-playwright`) |
 
 ### DevOps CLIs
 
