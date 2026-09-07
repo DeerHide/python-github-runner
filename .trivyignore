@@ -11,73 +11,73 @@ CVE-2025-47273 exp:2026-09-19
 GHSA-6v7p-g79w-8964 exp:2026-09-19
 #
 # Ubuntu (linux-libc-dev / kernel)
-CVE-2024-35870 exp:2026-08-19
-CVE-2024-53179 exp:2026-08-19
-CVE-2025-37849 exp:2026-08-19
-CVE-2025-37899 exp:2026-08-19
-CVE-2025-38118 exp:2026-08-19
+CVE-2024-35870 exp:2026-10-19
+CVE-2024-53179 exp:2026-10-19
+CVE-2025-37849 exp:2026-10-19
+CVE-2025-37899 exp:2026-10-19
+CVE-2025-38118 exp:2026-10-19
 #
 # Node (runner externals/node20)
-CVE-2024-21538 exp:2026-08-19
-CVE-2025-64756 exp:2026-08-19
-CVE-2026-26996 exp:2026-08-19
-CVE-2026-23745 exp:2026-08-19
-CVE-2026-23950 exp:2026-08-19
-CVE-2026-24842 exp:2026-08-19
-CVE-2026-26960 exp:2026-08-19
+CVE-2024-21538 exp:2026-10-19
+CVE-2025-64756 exp:2026-10-19
+CVE-2026-26996 exp:2026-10-19
+CVE-2026-23745 exp:2026-10-19
+CVE-2026-23950 exp:2026-10-19
+CVE-2026-24842 exp:2026-10-19
+CVE-2026-26960 exp:2026-10-19
 # Node.js bundled deps (sigstore, undici in official node dist)
-CVE-2026-48815 exp:2026-08-19
-CVE-2026-12151 exp:2026-08-19
+CVE-2026-48815 exp:2026-10-19
+CVE-2026-12151 exp:2026-10-19
 # npm deps bundled by the pinned node dist (brace-expansion, js-yaml, tar, ip-address).
 # NODE_VERSION 24.x still ships these; fixes need a new node/npm release.
-CVE-2026-13149 exp:2026-08-19
-CVE-2026-14257 exp:2026-08-19
-CVE-2026-59869 exp:2026-08-19
-CVE-2026-59873 exp:2026-08-19
-CVE-2026-59874 exp:2026-08-19
+CVE-2026-13149 exp:2026-10-19
+CVE-2026-14257 exp:2026-10-19
+CVE-2026-59869 exp:2026-10-19
+CVE-2026-59873 exp:2026-10-19
+CVE-2026-59874 exp:2026-10-19
 CVE-2026-69152 exp:2026-09-19
 CVE-2026-69192 exp:2026-09-19
 #
 # .NET (Runner.Plugins / Runner.Sdk deps)
-CVE-2024-38095 exp:2026-08-19
+CVE-2024-38095 exp:2026-10-19
 # Microsoft.NETCore.App.Runtime 8.0.28 shipped by actions-runner; RUNNER_VERSION
 # is already the latest, so clearing these needs an upstream runner rebuild.
-CVE-2026-47302 exp:2026-08-19
-CVE-2026-50524 exp:2026-08-19
-CVE-2026-50528 exp:2026-08-19
-CVE-2026-50651 exp:2026-08-19
-CVE-2026-57108 exp:2026-08-19
+CVE-2026-47302 exp:2026-10-19
+CVE-2026-50524 exp:2026-10-19
+CVE-2026-50528 exp:2026-10-19
+CVE-2026-50651 exp:2026-10-19
+CVE-2026-57108 exp:2026-10-19
 #
 # Go binaries (containerd, containerd-shim-runc-v2, docker-buildx – stdlib)
-CVE-2025-68121 exp:2026-08-19
-CVE-2025-47907 exp:2026-08-19
-CVE-2025-58183 exp:2026-08-19
-CVE-2025-61726 exp:2026-08-19
-CVE-2025-61728 exp:2026-08-19
-CVE-2025-61729 exp:2026-08-19
-CVE-2025-61730 exp:2026-08-19
+CVE-2025-68121 exp:2026-10-19
+CVE-2025-47907 exp:2026-10-19
+CVE-2025-58183 exp:2026-10-19
+CVE-2025-61726 exp:2026-10-19
+CVE-2025-61728 exp:2026-10-19
+CVE-2025-61729 exp:2026-10-19
+CVE-2025-61730 exp:2026-10-19
 #
 # Go binaries we install (dive, argo, kargo, pack, yq); upgrade versions to clear
-CVE-2023-45288 exp:2026-08-19
-CVE-2026-24051 exp:2026-08-19
-CVE-2024-24790 exp:2026-08-19
-CVE-2024-34156 exp:2026-08-19
-CVE-2024-41110 exp:2026-08-19
-CVE-2025-22868 exp:2026-08-19
-CVE-2025-22869 exp:2026-08-19
-CVE-2025-22874 exp:2026-08-19
-CVE-2025-29786 exp:2026-08-19
-CVE-2025-30204 exp:2026-08-19
-CVE-2025-32445 exp:2026-08-19
-CVE-2025-52881 exp:2026-08-19
-CVE-2025-59530 exp:2026-08-19
-CVE-2025-62156 exp:2026-08-19
-CVE-2025-62157 exp:2026-08-19
-CVE-2025-65637 exp:2026-08-19
-CVE-2025-66626 exp:2026-08-19
-CVE-2025-68156 exp:2026-08-19
-CVE-2026-23960 exp:2026-08-19
-CVE-2026-27112 exp:2026-08-19
+CVE-2023-45288 exp:2026-10-19
+CVE-2026-24051 exp:2026-10-19
+CVE-2024-24790 exp:2026-10-19
+CVE-2024-34156 exp:2026-10-19
+CVE-2024-41110 exp:2026-10-19
+CVE-2025-22868 exp:2026-10-19
+CVE-2025-22869 exp:2026-10-19
+CVE-2025-22874 exp:2026-10-19
+CVE-2025-29786 exp:2026-10-19
+CVE-2025-30204 exp:2026-10-19
+CVE-2025-32445 exp:2026-10-19
+CVE-2025-52881 exp:2026-10-19
+CVE-2025-59530 exp:2026-10-19
+CVE-2025-62156 exp:2026-10-19
+CVE-2025-62157 exp:2026-10-19
+CVE-2025-65637 exp:2026-10-19
+CVE-2025-66626 exp:2026-10-19
+CVE-2025-68156 exp:2026-10-19
+CVE-2026-23960 exp:2026-10-19
+CVE-2026-27112 exp:2026-10-19
 # golang.org/x/text infinite-loop (norm.Iter). Fixed in x/text 0.39.0; still
 # vendored <0.39 by base containerd/ctr and several pinned Go CLIs (dive has no
 # newer release). Drop as upstream rebuilds land.
@@ -85,56 +85,56 @@ CVE-2026-56852 exp:2026-09-19
 #
 # Remaining Go-related CVEs from current Trivy report (base/runtime binaries).
 # These are tracked temporarily until upstream runner/base/toolchain refreshes.
-CVE-2026-33186 exp:2026-08-19
-CVE-2026-25679 exp:2026-08-19
-CVE-2026-32280 exp:2026-08-19
-CVE-2026-32282 exp:2026-08-19
-CVE-2026-34986 exp:2026-08-19
-CVE-2026-39883 exp:2026-08-19
-CVE-2026-34040 exp:2026-08-19
-CVE-2026-33747 exp:2026-08-19
-CVE-2026-33748 exp:2026-08-19
-CVE-2025-15558 exp:2026-08-19
-CVE-2026-32281 exp:2026-08-19
-CVE-2026-32283 exp:2026-08-19
-CVE-2026-33810 exp:2026-08-19
-CVE-2026-35469 exp:2026-08-19
-CVE-2026-29181 exp:2026-08-19
-CVE-2026-33811 exp:2026-08-19
-CVE-2026-33814 exp:2026-08-19
-CVE-2026-39820 exp:2026-08-19
-CVE-2026-39823 exp:2026-08-19
-CVE-2026-39825 exp:2026-08-19
-CVE-2026-39836 exp:2026-08-19
-CVE-2026-42499 exp:2026-08-19
-CVE-2026-42504 exp:2026-08-19
-CVE-2026-44973 exp:2026-08-19
-CVE-2026-45022 exp:2026-08-19
-CVE-2026-46680 exp:2026-08-19
+CVE-2026-33186 exp:2026-10-19
+CVE-2026-25679 exp:2026-10-19
+CVE-2026-32280 exp:2026-10-19
+CVE-2026-32282 exp:2026-10-19
+CVE-2026-34986 exp:2026-10-19
+CVE-2026-39883 exp:2026-10-19
+CVE-2026-34040 exp:2026-10-19
+CVE-2026-33747 exp:2026-10-19
+CVE-2026-33748 exp:2026-10-19
+CVE-2025-15558 exp:2026-10-19
+CVE-2026-32281 exp:2026-10-19
+CVE-2026-32283 exp:2026-10-19
+CVE-2026-33810 exp:2026-10-19
+CVE-2026-35469 exp:2026-10-19
+CVE-2026-29181 exp:2026-10-19
+CVE-2026-33811 exp:2026-10-19
+CVE-2026-33814 exp:2026-10-19
+CVE-2026-39820 exp:2026-10-19
+CVE-2026-39823 exp:2026-10-19
+CVE-2026-39825 exp:2026-10-19
+CVE-2026-39836 exp:2026-10-19
+CVE-2026-42499 exp:2026-10-19
+CVE-2026-42504 exp:2026-10-19
+CVE-2026-44973 exp:2026-10-19
+CVE-2026-45022 exp:2026-10-19
+CVE-2026-46680 exp:2026-10-19
 #
 # gRPC-Go xDS RBAC / HTTP2 advisory in grpc bundled by gh, argo, grype and syft.
 # Their latest releases still vendor grpc < 1.82.1, and none of these CLIs run an
 # xDS server. Drop once upstream rebuilds against the fixed grpc.
-GHSA-hrxh-6v49-42gf exp:2026-08-19
+GHSA-hrxh-6v49-42gf exp:2026-10-19
 #
 # Go stdlib / x/crypto / x/net / containerd — base image and pinned CLIs without fixed releases yet.
-CVE-2026-25681 exp:2026-08-19
-CVE-2026-27136 exp:2026-08-19
-CVE-2026-27145 exp:2026-08-19
-CVE-2026-39821 exp:2026-08-19
-CVE-2026-39822 exp:2026-08-19
-CVE-2026-39828 exp:2026-08-19
-CVE-2026-39829 exp:2026-08-19
-CVE-2026-39830 exp:2026-08-19
-CVE-2026-39831 exp:2026-08-19
-CVE-2026-39832 exp:2026-08-19
-CVE-2026-39835 exp:2026-08-19
-CVE-2026-42508 exp:2026-08-19
-CVE-2026-46595 exp:2026-08-19
-CVE-2026-46597 exp:2026-08-19
-CVE-2026-53488 exp:2026-08-19
-CVE-2026-53489 exp:2026-08-19
-CVE-2026-53492 exp:2026-08-19
+CVE-2026-25681 exp:2026-10-19
+CVE-2026-27136 exp:2026-10-19
+CVE-2026-27145 exp:2026-10-19
+CVE-2026-39821 exp:2026-10-19
+CVE-2026-39822 exp:2026-10-19
+CVE-2026-39828 exp:2026-10-19
+CVE-2026-39829 exp:2026-10-19
+CVE-2026-39830 exp:2026-10-19
+CVE-2026-39831 exp:2026-10-19
+CVE-2026-39832 exp:2026-10-19
+CVE-2026-39835 exp:2026-10-19
+CVE-2026-42508 exp:2026-10-19
+CVE-2026-46595 exp:2026-10-19
+CVE-2026-46597 exp:2026-10-19
+CVE-2026-53488 exp:2026-10-19
+CVE-2026-53489 exp:2026-10-19
+CVE-2026-53492 exp:2026-10-19
 #
 # js-yaml quadratic !!omap (GHSA-5p4m-2wfm-xmqj). openapi-tools overrides 4.3.1;
 # ignore covers any leftover package.json that still declares 4.3.0.
@@ -157,3 +157,29 @@ CVE-2026-56862 exp:2026-09-19
 # go-git symlink write (CVE-2026-71556). Fixed in go-git 5.19.2; pinned argo /
 # chainloop / pack / syft / grype still vendor 5.19.1. Drop on those bumps.
 CVE-2026-71556 exp:2026-09-19
+#
+# @faker-js/faker ACE (CVE-2026-73231) fixed in 10.5.0. portman still vendors
+# 5.5.3; a 5→10 override is a breaking API bump. Drop when portman bumps faker.
+CVE-2026-73231 exp:2026-10-19
+#
+# pacote 21.5.1 / tar 7.5.21 are overridden in openapi-tools; Node's bundled npm
+# still ships the older copies. Drop when NODE_VERSION includes the patches.
+CVE-2026-9496 exp:2026-10-19
+CVE-2026-73566 exp:2026-10-19
+#
+# golang.org/x/crypto SSH source-address bypass. Fixed in 0.55.0; base
+# containerd/docker/runc and pinned CLIs still vendor <=0.54. Drop on rebuilds.
+CVE-2026-56854 exp:2026-10-19
+#
+# golang.org/x/mod sumdb. Fixed in 0.40.0; gh/chainloop/pack/grype/syft still
+# vendor <0.40. Drop on those bumps.
+CVE-2026-56864 exp:2026-10-19
+CVE-2026-56865 exp:2026-10-19
+#
+# gRPC-Go HTTP/2 (CVE-2026-84304) fixed in 1.83.1; argo/gh/grype/syft/chainloop
+# still vendor 1.82.1. Drop once those rebuild.
+CVE-2026-84304 exp:2026-10-19
+#
+# moby/go-archive tar extraction (CVE-2026-17106) fixed in 0.3.0; pack still
+# vendors 0.2.0.
+CVE-2026-17106 exp:2026-10-19
