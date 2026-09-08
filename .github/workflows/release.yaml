@@ -24,13 +24,16 @@ jobs:
         with:
           persist-credentials: false
 
+      # Preset v10 needs conventional-changelog-writer@9; semantic-release-action
+      # v6 / release-notes-generator still ship writer@8. Lift the pin when those
+      # move to writer@9. See conventional-changelog#1495.
       - uses: cycjimmy/semantic-release-action@v6.0.0
         id: semantic
         with:
           extra_plugins: |
             @semantic-release/changelog
             @semantic-release/git
-            conventional-changelog-conventionalcommits
+            conventional-changelog-conventionalcommits@9.3.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
