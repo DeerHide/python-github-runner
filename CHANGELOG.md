@@ -1,3 +1,16 @@
+## [1.13.0](https://github.com/DeerHide/python-github-runner/compare/v1.12.0...v1.13.0) (2026-09-08)
+
+### Features
+
+* add Playwright Python and Chromium ([99fa5e1](https://github.com/DeerHide/python-github-runner/commit/99fa5e1a484f688cedb61635d02f73bed48b7d4d))
+* nightly rebuild to refresh base image and cached actions ([1ba5c4b](https://github.com/DeerHide/python-github-runner/commit/1ba5c4b38ff676fcb24c1c8c52be94b9ec9ece0e))
+
+### Bug Fixes
+
+* **ci:** pin conventionalcommits preset to 9.3.1 ([39352d5](https://github.com/DeerHide/python-github-runner/commit/39352d5959ecff0f80e8075ae9bcfe521289b105))
+* **deps:** update github actions runner to 2.337.0 ([a7d8706](https://github.com/DeerHide/python-github-runner/commit/a7d8706080272faab9849b5feb7f32977b188bd2))
+* **security:** clear Trivy findings blocking release ([59b15f9](https://github.com/DeerHide/python-github-runner/commit/59b15f944d8361597d6fbe3e905d5a13fea05ccf))
+
 ## [1.12.0](https://github.com/DeerHide/python-github-runner/compare/v1.11.0...v1.12.0) (2026-08-15)
 
 ## [1.11.0](https://github.com/DeerHide/python-github-runner/compare/v1.10.0...v1.11.0) (2026-08-05)
