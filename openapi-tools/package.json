@@ -3,7 +3,7 @@
   "private": true,
   "description": "CVE overrides for OpenAPI npm CLIs installed via Containerfile. Tool versions come from manifest.yaml build args.",
   "overrides": {
-    "brace-expansion": "5.0.8",
+    "brace-expansion": "5.0.12",
     "flatted": "3.4.2",
     "handlebars": "4.7.9",
     "js-yaml": "4.3.1",
