@@ -132,7 +132,7 @@ RUN curl -sSL -o /tmp/gh.tgz \
     && gh --version
 
 # Install pack (Cloud Native Buildpacks CLI)
-ARG PACK_VERSION=0.40.8
+ARG PACK_VERSION=0.40.9
 RUN curl -sSL -o /tmp/pack.tgz \
       "https://github.com/buildpacks/pack/releases/download/v${PACK_VERSION}/pack-v${PACK_VERSION}-linux.tgz" \
     && tar -xzf /tmp/pack.tgz -C /usr/local/bin/ \
