@@ -11,7 +11,7 @@ jobs:
     name: Lint Containerfile
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v7.0.1
 
       - uses: hadolint/hadolint-action@v3.3.0
         with:
@@ -21,7 +21,7 @@ jobs:
     name: Action archive cache coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v7.0.1
       - name: Check required Laelidona github-actions refs are cached
         run: |
           chmod +x scripts/check_required_action_refs.sh
@@ -36,7 +36,7 @@ jobs:
       - action-cache-coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v7.0.1
 
       - name: Install build tools
         run: ./scripts/install_tools.sh
