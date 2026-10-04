@@ -217,7 +217,7 @@ RUN curl -sSL -o /tmp/zig.tar.xz \
     && zig version
 
 # cargo-lambda (AWS Lambda Rust packaging)
-ARG CARGO_LAMBDA_VERSION=1.9.1
+ARG CARGO_LAMBDA_VERSION=1.9.2
 RUN curl -sSL -o /tmp/cargo-lambda.tgz \
       "https://github.com/cargo-lambda/cargo-lambda/releases/download/v${CARGO_LAMBDA_VERSION}/cargo-lambda-v${CARGO_LAMBDA_VERSION}.x86_64-unknown-linux-musl.tar.gz" \
     && tar -xzf /tmp/cargo-lambda.tgz -C /usr/local/bin cargo-lambda \
