@@ -92,7 +92,7 @@ jobs:
         run: dive --ci --source=docker "${IMAGE_NAME}:test"
 
       - name: Cache Trivy vulnerability DB
-        uses: actions/cache@v5.0.3
+        uses: actions/cache@v6.1.0
         with:
           path: ~/.cache/trivy
           key: trivy-db-${{ runner.os }}-${{ github.run_id }}
