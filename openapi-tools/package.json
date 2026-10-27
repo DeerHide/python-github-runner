@@ -11,7 +11,7 @@
     "node-forge": "1.4.0",
     "pacote": "21.5.1",
     "sigstore": "4.1.1",
-    "tar": "7.5.21",
+    "tar": "7.5.22",
     "underscore": "1.13.8",
     "undici": "6.27.0"
   }
