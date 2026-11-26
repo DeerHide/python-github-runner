@@ -45,6 +45,7 @@ cache:
     - actions/cache/save@v5.0.3
     - actions/upload-artifact@v7.0.0
     - actions/download-artifact@v8.0.1
+    - actions/create-github-app-token@v3.3.0
     - softprops/action-gh-release@v3.0.2
     - slackapi/slack-github-action@v4.0.0
     - wagoid/commitlint-github-action@v6.2.1
